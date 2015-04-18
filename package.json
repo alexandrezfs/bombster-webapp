@@ -1,0 +1,33 @@
+{
+  "name": "useless",
+  "version": "1.0.0",
+  "description": "[Flux/ReactJS] Nothing there, this is a useless repo.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.12.3",
+    "browserify": "^9.0.8",
+    "express": "^4.12.3",
+    "express-handlebars": "^2.0.0",
+    "handlebars": "^3.0.1",
+    "moment": "^2.10.2",
+    "mongoose": "^4.0.1",
+    "node-jsx": "^0.12.4",
+    "node-uuid": "^1.4.3",
+    "react": "^0.13.1",
+    "watchify": "^3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexzhxin/useless.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexzhxin/bombster/issues"
+  },
+  "homepage": "https://github.com/alexzhxin/bombster"
+}
