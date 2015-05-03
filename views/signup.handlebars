@@ -1,0 +1,43 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <div class="text-block">
+                    <h5>Sign up</h5>
+                    <h4>Just few seconds to fill in 3 fields.</h4>
+                </div>
+            </div>
+        </div>
+        <!--end of row-->
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <form action="/signup" method="POST" class="project-planner">
+
+                    <div class="col-sm-12">
+                        <input class="input-standard" type="text" name="username" value="{{formValues.username}}" placeholder="Your username">
+                        <input class="input-standard" type="text" name="email" value="{{formValues.email}}" placeholder="Email Address">
+                        <input class="input-standard" type="password" name="password" placeholder="Password"
+                               style="width:31.333333%;">
+                    </div>
+
+                    <div class="col-sm-12 text-center">
+                        <input type="submit" class="btn" value="Sign Up">
+                    </div>
+
+                    <div class="form-error" {{#if errors}}style="display:block"{{/if}}>
+                    <span class="text-white">
+                        {{#each errors}}
+                            - {{this}}<br>
+                        {{/each}}
+                    </span>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <!--end of row-->
+
+    </div>
+    <!--end of container-->
+</section>

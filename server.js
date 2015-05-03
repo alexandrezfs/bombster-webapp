@@ -4,7 +4,10 @@ var express = require('express'),
     http = require('http'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
-    config = require('./config');
+    config = require('./config'),
+    multer  = require('multer'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session');
 
 // Create an express instance and set a port variable
 var app = express();
@@ -14,6 +17,10 @@ app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 }));
+app.use(session({secret: 'token'}));
+app.use(bodyParser());
+app.use(cookieParser());
+app.use(multer({ dest: __dirname + '/public/upload/'}));
 
 // Set handlebars as the templating engine
 app.use("/", express.static(__dirname + "/public/"));
@@ -22,11 +29,13 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', routes.index);
+app.get('/signup', routes.signup);
+app.post('/signup', routes.signupProcess);
 
 //Redirect no 200 status to /
 app.use(function (req, res, next) {
     if (res.status != 200) {
-        res.redirect('/');
+        res.render('404');
     }
 });
 
