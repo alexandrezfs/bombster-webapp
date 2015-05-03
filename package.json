@@ -23,7 +23,7 @@
 
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt --verbose"
   },
   "repository": {
     "type": "git",
