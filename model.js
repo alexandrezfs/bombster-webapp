@@ -17,8 +17,11 @@ mongoose.connect(config.values.mongodb_addr, function (err) {
 var UserSchema = new Schema({
     email: String,
     username: String,
+    password: String,
     signed_up_with: String,
     signed_up_from: String,
+    is_account_activated: Boolean,
+    token: String,
     last_login: {type: Date, default: Date.now},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}

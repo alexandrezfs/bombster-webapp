@@ -1,4 +1,8 @@
 var formValidator = require('./form_validation');
+var bcrypt = require('bcrypt');
+var model = require('./model');
+var uuid = require('node-uuid');
+
 
 module.exports = {
 
@@ -24,14 +28,35 @@ module.exports = {
             username: username
         };
 
-        var errors = formValidator.FormValidator.validateSignupForm(formValues);
+        formValidator.FormValidator.validateSignupForm(formValues, function (errors) {
 
-        if (errors.length > 0) {
-            res.render('signup', {formValues: formValues, errors: errors});
-        }
-        else {
-            res.redirect('/dashboard');
-        }
+            if (errors.length > 0) {
+
+                res.render('signup', {formValues: formValues, errors: errors});
+            }
+            else {
+
+                bcrypt.hash(formValues.password, 10, function (err, hash) {
+
+                    var user = {
+                        password: hash,
+                        username: formValues.username,
+                        email: formValues.email,
+                        is_account_activated: false,
+                        token: uuid.v4()
+                    };
+
+                    new model.ModelContainer.UserModel(user).save(function (err, u) {
+
+                        req.session.username = u.username;
+
+                        res.redirect('/dashboard');
+                    });
+                });
+
+            }
+
+        });
 
     }
 
