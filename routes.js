@@ -58,6 +58,81 @@ module.exports = {
 
         });
 
+    },
+
+    login: function(req, res) {
+
+        res.render('login');
+    },
+
+    loginProcess: function(req, res) {
+
+        var login = req.body.login;
+        var password = req.body.password;
+
+        var errors = [];
+
+        model.ModelContainer.UserModel.findOne({$or : [{username: login}, {email: login}]}, function(err, user) {
+
+            if(!user) {
+                errors.push('Your login / password are not recognized');
+                res.render('login', {errors: errors});
+            }
+            else {
+
+                bcrypt.compare(password, user.password, function (err, result) {
+
+                    if (result === true) {
+
+                        //Update login date
+                        user.last_login = new Date();
+                        user.save();
+
+                        req.session.username = user.username;
+
+                        res.redirect('/dashboard');
+                    }
+                    else {
+                        errors.push('Password is not correct');
+                        res.render('login', {errors: errors});
+                    }
+
+                });
+
+            }
+
+        });
+    },
+
+    passwordRecover: function(req, res) {
+
+        res.render('password_recover');
+    },
+
+    passwordRecoverProcess: function(req, res) {
+
+        var email = req.body.email;
+        var errors = [];
+
+        model.ModelContainer.UserModel.findOne({email: email}, function(err, user) {
+
+            if(!user) {
+                errors.push('This email does not match with any account.');
+                res.render('password_recover', {errors: errors});
+            }
+            else {
+
+                //TODO: send a mail
+
+                res.redirect('/password/recover/success');
+            }
+
+        });
+    },
+
+    passwordRecoverSuccess: function(req, res) {
+
+        res.render('password_recover_success');
     }
 
 };

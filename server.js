@@ -31,8 +31,12 @@ app.set('view engine', 'handlebars');
 app.get('/', routes.index);
 app.get('/signup', routes.signup);
 app.post('/signup', routes.signupProcess);
+app.get('/login', routes.login);
 app.post('/login', routes.loginProcess);
-app.post('/login', routes.signupProcess);
+app.get('/password/recover', routes.passwordRecover);
+app.post('/password/recover', routes.passwordRecoverProcess);
+app.get('/password/recover/success', routes.passwordRecoverSuccess);
+
 
 //Redirect no 200 status to /
 app.use(function (req, res, next) {
