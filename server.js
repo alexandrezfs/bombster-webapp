@@ -36,6 +36,7 @@ app.post('/login', routes.loginProcess);
 app.get('/password/recover', routes.passwordRecover);
 app.post('/password/recover', routes.passwordRecoverProcess);
 app.get('/password/recover/success', routes.passwordRecoverSuccess);
+app.get('/password/reset/:token', routes.passwordReset);
 
 
 //Redirect no 200 status to /

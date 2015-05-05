@@ -2,7 +2,8 @@ var formValidator = require('./form_validation');
 var bcrypt = require('bcrypt');
 var model = require('./model');
 var uuid = require('node-uuid');
-
+var email_interface = require('./email_interface');
+var config = require('./config');
 
 module.exports = {
 
@@ -60,21 +61,21 @@ module.exports = {
 
     },
 
-    login: function(req, res) {
+    login: function (req, res) {
 
         res.render('login');
     },
 
-    loginProcess: function(req, res) {
+    loginProcess: function (req, res) {
 
         var login = req.body.login;
         var password = req.body.password;
 
         var errors = [];
 
-        model.ModelContainer.UserModel.findOne({$or : [{username: login}, {email: login}]}, function(err, user) {
+        model.ModelContainer.UserModel.findOne({$or: [{username: login}, {email: login}]}, function (err, user) {
 
-            if(!user) {
+            if (!user) {
                 errors.push('Your login / password are not recognized');
                 res.render('login', {errors: errors});
             }
@@ -104,35 +105,68 @@ module.exports = {
         });
     },
 
-    passwordRecover: function(req, res) {
+    passwordRecover: function (req, res) {
 
         res.render('password_recover');
     },
 
-    passwordRecoverProcess: function(req, res) {
+    passwordRecoverProcess: function (req, res) {
 
         var email = req.body.email;
         var errors = [];
 
-        model.ModelContainer.UserModel.findOne({email: email}, function(err, user) {
+        model.ModelContainer.UserModel.findOne({email: email}, function (err, user) {
 
-            if(!user) {
+            if (!user) {
                 errors.push('This email does not match with any account.');
                 res.render('password_recover', {errors: errors});
             }
             else {
 
-                //TODO: send a mail
+                var host = req.get('host');
+                var protocol = req.protocol;
+                var link = protocol + '://' + host + '/password/reset/' + user.token;
+
+                email_interface.sendMailWithTemplate(
+                    "",
+                    "",
+                    config.values.mandrill_templates['password-reset-link'].name,
+                    config.values.email_system_address,
+                    "Bombster.io",
+                    user.email,
+                    config.values.mandrill_templates['password-reset-link'].slug,
+                    [{name: "USERNAME", content: user.username}, {name: "LINK", content: link}],
+                    function (response) {
+                        console.log(response);
+                    });
 
                 res.redirect('/password/recover/success');
+
             }
 
         });
     },
 
-    passwordRecoverSuccess: function(req, res) {
+    passwordRecoverSuccess: function (req, res) {
 
         res.render('password_recover_success');
+    },
+
+    passwordReset: function (req, res) {
+
+        var token = req.params.token;
+
+        model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
+
+            if (user) {
+                res.render('password_reset', {user: user});
+            }
+            else {
+                res.redirect('/');
+            }
+
+        });
+
     }
 
 };
