@@ -167,6 +167,59 @@ module.exports = {
 
         });
 
+    },
+
+    passwordResetProcess: function (req, res) {
+
+        var password = req.body.password;
+        var passwordC = req.body.passwordC;
+        var token = req.body.token;
+
+        var formValues = {
+            password: password,
+            passwordC: passwordC
+        };
+
+        formValidator.FormValidator.validateResetPasswordForm(formValues, function (errors) {
+
+            if (errors.length == 0) {
+
+                model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
+
+                    bcrypt.hash(formValues.password, 10, function (err, hash) {
+
+                        user.password = hash;
+                        user.token = uuid.v4();
+                        user.save();
+
+                        email_interface.sendMailWithTemplate(
+                            "",
+                            "",
+                            config.values.mandrill_templates['password-reset-success'].name,
+                            config.values.email_system_address,
+                            "Bombster.io",
+                            user.email,
+                            config.values.mandrill_templates['password-reset-success'].slug,
+                            [{name: "USERNAME", content: user.username}],
+                            function (response) {
+                                console.log(response);
+                            });
+
+                        res.redirect('/password/reset-success');
+
+                    });
+                });
+            }
+            else {
+                res.render('password_reset', {errors: errors});
+            }
+
+        });
+    },
+
+    passwordResetSuccess: function(req, res) {
+
+        res.render('password_reset_success');
     }
 
 };

@@ -42,6 +42,26 @@ exports.FormValidator = {
 
         });
 
+    },
+
+    validateResetPasswordForm: function(formValues, callback) {
+
+        var errors = [];
+
+        if (formValues.password.length === 0) {
+            errors.push('Password is missing');
+        }
+
+        if (formValues.password.length > 70) {
+            errors.push('Password must not exceed 70 characters.');
+        }
+
+        if(formValues.password != formValues.passwordC) {
+            errors.push('Passwords mismatch !');
+        }
+
+        callback(errors);
+
     }
 
 };
