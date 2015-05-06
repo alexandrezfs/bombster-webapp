@@ -39,6 +39,10 @@ app.get('/password/recover/success', routes.passwordRecoverSuccess);
 app.get('/password/reset/:token', routes.passwordReset);
 app.post('/password/reset', routes.passwordResetProcess);
 app.get('/password/reset-success', routes.passwordResetSuccess);
+app.get('/dashboard', routes.dashboard);
+app.post('/question/add', routes.addQuestion);
+app.get('/q/:question_slug', routes.question);
+app.post('/vote', routes.addVote);
 
 
 //Redirect no 200 status to /
@@ -49,6 +53,6 @@ app.use(function (req, res, next) {
 });
 
 // Fire it up (start our server)
-var server = http.createServer(app).listen(port, function () {
+http.createServer(app).listen(port, function () {
     console.log('Express server listening on port ' + port);
 });

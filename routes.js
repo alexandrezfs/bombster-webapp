@@ -4,6 +4,8 @@ var model = require('./model');
 var uuid = require('node-uuid');
 var email_interface = require('./email_interface');
 var config = require('./config');
+var slug = require('slug');
+var shortid = require('shortid');
 
 module.exports = {
 
@@ -182,7 +184,7 @@ module.exports = {
 
         formValidator.FormValidator.validateResetPasswordForm(formValues, function (errors) {
 
-            if (errors.length == 0) {
+            if (errors.length === 0) {
 
                 model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
 
@@ -217,9 +219,91 @@ module.exports = {
         });
     },
 
-    passwordResetSuccess: function(req, res) {
+    passwordResetSuccess: function (req, res) {
 
         res.render('password_reset_success');
+    },
+
+    dashboard: function (req, res) {
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
+
+            res.render('dashboard', {user: user});
+
+        });
+
+    },
+
+    addQuestion: function (req, res) {
+
+        var question_title = req.body.question_title;
+        var question_slug = slug(question_title);
+        var question_identifier = shortid.generate();
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
+
+            var question = {
+                question_title: question_title,
+                question_slug: question_slug,
+                question_identifier: question_identifier,
+                user_id: user._id
+            };
+
+            model.ModelContainer.QuestionModel(question).save(function (err, q) {
+
+                res.redirect('/q/' + q.question_slug);
+
+            });
+
+        });
+
+    },
+
+    question: function (req, res) {
+
+        var question_slug = req.params.question_slug;
+
+        model.ModelContainer.QuestionModel.findOne({question_slug: question_slug}, function (err, q) {
+
+            res.render('question', {question: q});
+
+        });
+
+    },
+
+    addVote: function (req, res) {
+
+        var question_id = req.body.question_id;
+        var vote_value = req.body.vote_value;
+        var fingerprints = req.body.fingerprints;
+
+        var vote = {
+            question_id: question_id,
+            vote_value: vote_value,
+            fingerprints: fingerprints
+        };
+
+        model.ModelContainer.QuestionModel.findOne(function(err, q) {
+            model.ModelContainer.VoteModel(vote).save(function(err, v) {
+
+                if(vote_value == 'yes') {
+                    q.vote_yes_count++;
+                }
+                else if(vote_value == 'no') {
+                    q.vote_no_count++;
+                }
+
+                q.save();
+
+                res.json({
+                    message: 'success'
+                });
+
+            });
+        });
     }
 
 };
