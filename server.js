@@ -51,7 +51,7 @@ app.post('/vote', routes.addVote);
 //Redirect no 200 status to /
 app.use(function (req, res, next) {
     if (res.status != 200) {
-        res.render('404');
+        res.render('404', {layout: 'admin'});
     }
 });
 
