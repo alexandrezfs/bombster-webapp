@@ -65,13 +65,35 @@ module.exports = {
 
     login: function (req, res) {
 
-        res.render('login', {layout: 'account'});
+        if(req.cookies._id) {
+
+            model.ModelContainer.UserModel.findOne({_id: req.cookies._id}, function(err, user) {
+
+                if(user) {
+
+                    //Update login date
+                    user.last_login = new Date();
+                    user.save();
+
+                    req.session.username = user.username;
+
+                    res.redirect('/dashboard');
+                }
+
+            });
+
+        }
+        else {
+            res.render('login', {layout: 'account'});
+        }
+
     },
 
     loginProcess: function (req, res) {
 
         var login = req.body.login;
         var password = req.body.password;
+        var remember = req.body.remember;
 
         var errors = [];
 
@@ -92,6 +114,10 @@ module.exports = {
                         user.save();
 
                         req.session.username = user.username;
+
+                        if(remember) {
+                            res.cookie('_id', user._id, { maxAge: 900000, httpOnly: true });
+                        }
 
                         res.redirect('/dashboard');
                     }
