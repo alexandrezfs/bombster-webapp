@@ -1,6 +1,8 @@
 // Require our dependencies
 var express = require('express'),
+    handlebars = require('handlebars'),
     exphbs = require('express-handlebars'),
+    layouts = require('handlebars-layouts'),
     http = require('http'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
@@ -12,6 +14,7 @@ var express = require('express'),
 // Create an express instance and set a port variable
 var app = express();
 var port = config.values.port;
+handlebars.registerHelper(layouts(handlebars));
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -25,7 +28,7 @@ app.use(multer({ dest: __dirname + '/public/upload/'}));
 // Set handlebars as the templating engine
 app.use("/", express.static(__dirname + "/public/"));
 app.set('views', __dirname + '/views');
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({defaultLayout: 'landing'}));
 app.set('view engine', 'handlebars');
 
 app.get('/', routes.index);

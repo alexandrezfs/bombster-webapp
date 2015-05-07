@@ -34,6 +34,7 @@ var QuestionSchema = new Schema({
     user_id: ObjectId,
     vote_yes_count: {type: Number, default: 0},
     vote_no_count: {type: Number, default: 0},
+    views_count: {type: Number, default: 0},
     is_vote_opened: {type: Boolean, default: true},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}

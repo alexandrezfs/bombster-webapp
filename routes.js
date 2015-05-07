@@ -11,12 +11,12 @@ module.exports = {
 
     index: function (req, res) {
 
-        res.render('index');
+        res.render('index', {layout: 'landing'});
     },
 
     signup: function (req, res) {
 
-        res.render('signup');
+        res.render('signup',  {layout: 'landing'});
     },
 
     signupProcess: function (req, res) {
@@ -35,7 +35,7 @@ module.exports = {
 
             if (errors.length > 0) {
 
-                res.render('signup', {formValues: formValues, errors: errors});
+                res.render('signup', {formValues: formValues, errors: errors, layout: 'landing'});
             }
             else {
 
@@ -65,7 +65,7 @@ module.exports = {
 
     login: function (req, res) {
 
-        res.render('login');
+        res.render('login', {layout: 'account'});
     },
 
     loginProcess: function (req, res) {
@@ -78,8 +78,8 @@ module.exports = {
         model.ModelContainer.UserModel.findOne({$or: [{username: login}, {email: login}]}, function (err, user) {
 
             if (!user) {
-                errors.push('Your login / password are not recognized');
-                res.render('login', {errors: errors});
+                errors.push('Your login / password are not recognized.');
+                res.render('login', {errors: errors,　layout: 'account'});
             }
             else {
 
@@ -97,7 +97,7 @@ module.exports = {
                     }
                     else {
                         errors.push('Password is not correct');
-                        res.render('login', {errors: errors});
+                        res.render('login', {errors: errors, layout: 'account'});
                     }
 
                 });
@@ -109,7 +109,7 @@ module.exports = {
 
     passwordRecover: function (req, res) {
 
-        res.render('password_recover');
+        res.render('password_recover', {layout: 'landing'});
     },
 
     passwordRecoverProcess: function (req, res) {
@@ -121,7 +121,7 @@ module.exports = {
 
             if (!user) {
                 errors.push('This email does not match with any account.');
-                res.render('password_recover', {errors: errors});
+                res.render('password_recover', {errors: errors, layout: 'landing'});
             }
             else {
 
@@ -151,7 +151,7 @@ module.exports = {
 
     passwordRecoverSuccess: function (req, res) {
 
-        res.render('password_recover_success');
+        res.render('password_recover_success', {layout: 'landing'});
     },
 
     passwordReset: function (req, res) {
@@ -161,7 +161,7 @@ module.exports = {
         model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
 
             if (user) {
-                res.render('password_reset', {user: user});
+                res.render('password_reset', {user: user, layout: 'landing'});
             }
             else {
                 res.redirect('/');
@@ -213,7 +213,7 @@ module.exports = {
                 });
             }
             else {
-                res.render('password_reset', {errors: errors});
+                res.render('password_reset', {errors: errors, layout: 'landing'});
             }
 
         });
@@ -221,7 +221,7 @@ module.exports = {
 
     passwordResetSuccess: function (req, res) {
 
-        res.render('password_reset_success');
+        res.render('password_reset_success', {layout: 'landing'});
     },
 
     dashboard: function (req, res) {
@@ -230,7 +230,11 @@ module.exports = {
 
         model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
 
-            res.render('dashboard', {user: user});
+            model.ModelContainer.QuestionModel.find({user_id: user._id}, function (err, questions) {
+
+                res.render('dashboard', {user: user, questions: questions, layout: 'admin'});
+
+            });
 
         });
 
@@ -268,7 +272,10 @@ module.exports = {
 
         model.ModelContainer.QuestionModel.findOne({question_slug: question_slug}, function (err, q) {
 
-            res.render('question', {question: q});
+            q.views_count++;
+            q.save();
+
+            res.render('question', {question: q, layout: 'admin'});
 
         });
 
@@ -286,24 +293,42 @@ module.exports = {
             fingerprints: fingerprints
         };
 
-        model.ModelContainer.QuestionModel.findOne(function(err, q) {
-            model.ModelContainer.VoteModel(vote).save(function(err, v) {
+        model.ModelContainer.VoteModel.findOne({
+            fingerprints: fingerprints,
+            question_id: question_id
+        }, function (err, voteVerif) {
 
-                if(vote_value == 'yes') {
-                    q.vote_yes_count++;
-                }
-                else if(vote_value == 'no') {
-                    q.vote_no_count++;
-                }
+            if (vote) {
+                res.json({message: 'already voted'});
+            }
+            else {
 
-                q.save();
+                model.ModelContainer.QuestionModel.findOne(function (err, q) {
+                    model.ModelContainer.VoteModel(vote).save(function (err, v) {
 
-                res.json({
-                    message: 'success'
+                        if (vote_value == 'yes') {
+                            q.vote_yes_count++;
+                        }
+                        else if (vote_value == 'no') {
+                            q.vote_no_count++;
+                        }
+
+                        q.save(function (err, qSaved) {
+
+                            res.json({
+                                message: 'success',
+                                question: qSaved
+                            });
+
+                        });
+
+                    });
                 });
 
-            });
+            }
+
         });
+
     }
 
 };

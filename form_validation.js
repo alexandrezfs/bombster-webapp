@@ -20,7 +20,7 @@ exports.FormValidator = {
         }
 
         if (formValues.password.length === 0) {
-            errors.push('Password is missing');
+            errors.push('Password is missing.');
         }
 
         if (formValues.password.length > 70) {
@@ -49,7 +49,7 @@ exports.FormValidator = {
         var errors = [];
 
         if (formValues.password.length === 0) {
-            errors.push('Password is missing');
+            errors.push('Password is missing.');
         }
 
         if (formValues.password.length > 70) {

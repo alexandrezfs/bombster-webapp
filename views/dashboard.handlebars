@@ -19,6 +19,10 @@
                     <input type="submit" class="btn">
                 </form>
 
+                {{#each questions}}
+                    <div><a href="/q/{{this.question_slug}}">{{this.question_title}}</a></div>
+                {{/each}}
+
             </div>
         </div>
     </div>

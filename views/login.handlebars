@@ -1,38 +1,64 @@
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-sm-6">
-                <div class="text-block">
-                    <h5>Login</h5>
-                </div>
+
+    <hr class="spacer-md">
+    <hr class="spacer-xs">
+
+    <div class="account-wrapper">
+
+        {{#if errors}}
+            <div class="alert alert-danger" role="alert">
+                {{#each errors}}
+                    {{this}}<br>
+                {{/each}}
             </div>
-        </div>
-        <!--end of row-->
+        {{/if}}
 
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <form action="/login" method="POST">
+        <div class="account-body">
 
-                    <div class="col-sm-12">
-                        <input class="input-standard" type="text" name="login" placeholder="Email or username">
-                        <input class="input-standard" type="password" name="password" placeholder="Password">
-                        <input type="submit" class="btn" value="Login">
+            <h3>Welcome to Bombster.io</h3>
+
+            <h5>Please sign in to get access.</h5>
+
+            <form action="/login" method="POST" class="form account-form">
+
+                <div class="form-group">
+                    <label for="login" class="placeholder-hidden">Email or Username</label>
+                    <input type="text" class="form-control" id="login" name="login" placeholder="Email or Username" tabindex="1">
+                </div> <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label for="password" class="placeholder-hidden">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" tabindex="2">
+                </div> <!-- /.form-group -->
+
+                <div class="form-group clearfix">
+                    <div class="pull-left">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" class="" name="remember" value="" tabindex="3"> <small>Remember me</small>
+                        </label>
                     </div>
 
-                    <div class="form-error" {{#if errors}}style="display:block"{{/if}}>
-                        <span class="text-white">
-                            {{#each errors}}
-                                - {{this}}<br>
-                            {{/each}}
-                        </span>
+                    <div class="pull-right">
+                        <small><a href="/password/recover">Forgot Password?</a></small>
                     </div>
+                </div> <!-- /.form-group -->
 
-                </form>
-                <p><a href="/password/recover">I forgot my password</a></p>
-            </div>
-        </div>
-        <!--end of row-->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" tabindex="4">
+                        Signin &nbsp; <i class="fa fa-play-circle"></i>
+                    </button>
+                </div> <!-- /.form-group -->
 
-    </div>
-    <!--end of container-->
-</section>
+            </form>
+
+
+        </div> <!-- /.account-body -->
+
+        <div class="account-footer">
+            <p>
+                Don't have an account? &nbsp;
+                <a href="/signup" class="">Create an Account!</a>
+            </p>
+        </div> <!-- /.account-footer -->
+
+    </div> <!-- /.account-wrapper -->
+
