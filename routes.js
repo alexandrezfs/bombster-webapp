@@ -7,6 +7,7 @@ var config = require('./config');
 var slug = require('slug');
 var shortid = require('shortid');
 var gravatar = require('gravatar');
+var uploader = require('./upload');
 
 module.exports = {
 
@@ -288,6 +289,32 @@ module.exports = {
 
     },
 
+    upload: function(req, res) {
+
+        var image = req.files.file.name;
+
+        if(image) {
+
+            uploader.client.upload(image, {}, function(err, images, meta) {
+                if (err) {
+
+                    console.error(err);
+
+                    res.json(err);
+
+                } else {
+
+                    for (var i = 0; i < images.length; i++) {
+                        console.log('Thumbnail with width %i, height %i, at %s', images[i].width, images[i].height, images[i].url);
+                    }
+
+                    res.json(images);
+                }
+            });
+
+        }
+    },
+
     addQuestion: function (req, res) {
 
         var question_title = req.body.question_title;
@@ -306,7 +333,7 @@ module.exports = {
 
             model.ModelContainer.QuestionModel(question).save(function (err, q) {
 
-                res.redirect('/q/' + q.question_slug);
+                res.json(q);
 
             });
 

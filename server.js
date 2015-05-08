@@ -47,6 +47,7 @@ app.get('/dashboard', auth.authMiddleware, routes.dashboard);
 app.post('/question/add', routes.addQuestion);
 app.get('/q/:question_slug', routes.question);
 app.post('/vote', routes.addVote);
+app.post('/upload', routes.upload);
 
 
 //Redirect no 200 status to /
