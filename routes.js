@@ -53,7 +53,22 @@ module.exports = {
 
                         req.session.username = u.username;
 
+                        //Send a mail
+                        email_interface.sendMailWithTemplate(
+                            "",
+                            "",
+                            config.values.mandrill_templates['bombster-signup-success'].name,
+                            config.values.email_system_address,
+                            "Bombster.io",
+                            u.email,
+                            config.values.mandrill_templates['bombster-signup-success'].slug,
+                            [{name: "USERNAME", content: u.username}],
+                            function (response) {
+                                console.log(response);
+                            });
+
                         res.redirect('/dashboard');
+
                     });
                 });
 

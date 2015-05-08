@@ -19,15 +19,15 @@
 
         <div class="account-wrapper">
 
-            <div class="account-body">
+            {{#if errors}}
+                <div class="alert alert-danger" role="alert">
+                    {{#each errors}}
+                        {{this}}<br>
+                    {{/each}}
+                </div>
+            {{/if}}
 
-                {{#if errors}}
-                    <div class="alert alert-danger" role="alert">
-                        {{#each errors}}
-                            {{this}}<br>
-                        {{/each}}
-                    </div>
-                {{/if}}
+            <div class="account-body">
 
                 <h3>Get Started with a Free Account.</h3>
 
