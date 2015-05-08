@@ -278,7 +278,7 @@ module.exports = {
 
             model.ModelContainer.QuestionModel.find({user_id: user._id}, function (err, questions) {
 
-                var gravatar_url = gravatar.url(user.email, {s: '200'});
+                var gravatar_url = gravatar.url(user.email, {s: '400'});
 
                 res.render('dashboard', {user: user, questions: questions, layout: 'admin', gravatar_url: gravatar_url});
 
