@@ -6,6 +6,7 @@ var email_interface = require('./email_interface');
 var config = require('./config');
 var slug = require('slug');
 var shortid = require('shortid');
+var gravatar = require('gravatar');
 
 module.exports = {
 
@@ -80,7 +81,11 @@ module.exports = {
 
     login: function (req, res) {
 
-        if(req.cookies._id) {
+        if(req.session.username) {
+
+            res.redirect('/dashboard');
+        }
+        else if(req.cookies._id) {
 
             model.ModelContainer.UserModel.findOne({_id: req.cookies._id}, function(err, user) {
 
@@ -273,7 +278,9 @@ module.exports = {
 
             model.ModelContainer.QuestionModel.find({user_id: user._id}, function (err, questions) {
 
-                res.render('dashboard', {user: user, questions: questions, layout: 'admin'});
+                var gravatar_url = gravatar.url(user.email, {s: '200'});
+
+                res.render('dashboard', {user: user, questions: questions, layout: 'admin', gravatar_url: gravatar_url});
 
             });
 
@@ -313,10 +320,16 @@ module.exports = {
 
         model.ModelContainer.QuestionModel.findOne({question_slug: question_slug}, function (err, q) {
 
-            q.views_count++;
-            q.save();
+            if(q) {
+                res.redirect('/404');
+            }
+            else {
 
-            res.render('question', {question: q, layout: 'admin'});
+                q.views_count++;
+                q.save();
+
+                res.render('question', {question: q, layout: 'admin'});
+            }
 
         });
 
@@ -339,7 +352,7 @@ module.exports = {
             question_id: question_id
         }, function (err, voteVerif) {
 
-            if (vote) {
+            if (voteVerif) {
                 res.json({message: 'already voted'});
             }
             else {

@@ -9,7 +9,8 @@ var express = require('express'),
     config = require('./config'),
     multer  = require('multer'),
     cookieParser = require('cookie-parser'),
-    session = require('express-session');
+    session = require('express-session'),
+    auth = require('./auth');
 
 // Create an express instance and set a port variable
 var app = express();
@@ -42,7 +43,7 @@ app.get('/password/recover/success', routes.passwordRecoverSuccess);
 app.get('/password/reset/:token', routes.passwordReset);
 app.post('/password/reset', routes.passwordResetProcess);
 app.get('/password/reset-success', routes.passwordResetSuccess);
-app.get('/dashboard', routes.dashboard);
+app.get('/dashboard', auth.authMiddleware, routes.dashboard);
 app.post('/question/add', routes.addQuestion);
 app.get('/q/:question_slug', routes.question);
 app.post('/vote', routes.addVote);

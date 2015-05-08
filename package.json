@@ -12,6 +12,7 @@
     "express": "^4.12.3",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.1",
+    "gravatar": "^1.1.1",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.2",
