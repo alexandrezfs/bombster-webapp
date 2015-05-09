@@ -295,23 +295,12 @@ module.exports = {
 
         if(image) {
 
-            uploader.client.upload(image, {}, function(err, images, meta) {
-                if (err) {
+            uploader.upload('public/upload/' + image, image, function(response) {
 
-                    console.error(err);
+                console.log(response);
+                res.json(response);
 
-                    res.json(err);
-
-                } else {
-
-                    for (var i = 0; i < images.length; i++) {
-                        console.log('Thumbnail with width %i, height %i, at %s', images[i].width, images[i].height, images[i].url);
-                    }
-
-                    res.json(images);
-                }
             });
-
         }
     },
 

@@ -1,29 +1,29 @@
-var Upload = require('s3-uploader');
-var config = require('./config');
+var AWS = require('aws-sdk'),
+    fs = require('fs'),
+    config = require('./config');
 
-process.env.AWS_ACCESS_KEY_ID = config.values.aws.accessKeyId;
-process.env.AWS_SECRET_ACCESS_KEY = config.values.aws.secretAccessKey;
+exports.upload = function (file, filename, callback) {
 
-exports.client = new Upload('bombster-images', {
-    
-    awsBucketRegion: 'us-west-2',
-    awsBucketPath: 'images/',
-    awsBucketAcl: 'public-read',
+    AWS.config.update({
+        accessKeyId: config.values.aws.accessKeyId,
+        secretAccessKey: config.values.aws.secretAccessKey,
+        region: 'ap-northeast-1'
+    });
 
-    versions: [{
-        original: true
-    },{
-        suffix: '-large',
-        quality: 80,
-        maxHeight: 1040,
-        maxWidth: 1040,
-    },{
-        suffix: '-medium',
-        maxHeight: 780,
-        maxWidth: 780
-    },{
-        suffix: '-small',
-        maxHeight: 320,
-        maxWidth: 320
-    }]
-});
+    fs.readFile(file, function (err, data) {
+
+        if (err) {
+            throw err;
+        }
+
+        var s3bucket = new AWS.S3({params: {Bucket: 'bombster'}});
+        s3bucket.createBucket(function() {
+            var params = {Key: 'images/' + filename, Body: data};
+            s3bucket.upload(params, function(err, data) {
+                callback(data);
+            });
+        });
+
+    });
+
+};

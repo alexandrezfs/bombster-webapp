@@ -1,0 +1,14 @@
+.dz-preview {
+    display: none;
+}
+
+.img-thumbnail {
+    max-height: 29px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.loader {
+    max-height: 20px;
+    margin-top: 5px;
+}
