@@ -18,7 +18,7 @@ module.exports = {
 
     signup: function (req, res) {
 
-        res.render('signup',  {layout: 'landing'});
+        res.render('signup', {layout: 'landing'});
     },
 
     signupProcess: function (req, res) {
@@ -82,15 +82,15 @@ module.exports = {
 
     login: function (req, res) {
 
-        if(req.session.username) {
+        if (req.session.username) {
 
             res.redirect('/dashboard');
         }
-        else if(req.cookies._id) {
+        else if (req.cookies._id) {
 
-            model.ModelContainer.UserModel.findOne({_id: req.cookies._id}, function(err, user) {
+            model.ModelContainer.UserModel.findOne({_id: req.cookies._id}, function (err, user) {
 
-                if(user) {
+                if (user) {
 
                     //Update login date
                     user.last_login = new Date();
@@ -122,7 +122,7 @@ module.exports = {
 
             if (!user) {
                 errors.push('Your login / password are not recognized.');
-                res.render('login', {errors: errors,　layout: 'account'});
+                res.render('login', {errors: errors, layout: 'account'});
             }
             else {
 
@@ -136,8 +136,8 @@ module.exports = {
 
                         req.session.username = user.username;
 
-                        if(remember) {
-                            res.cookie('_id', user._id, { maxAge: 900000, httpOnly: true });
+                        if (remember) {
+                            res.cookie('_id', user._id, {maxAge: 900000, httpOnly: true});
                         }
 
                         res.redirect('/dashboard');
@@ -233,7 +233,7 @@ module.exports = {
 
             if (errors.length === 0) {
 
-                model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
+                model.ModelContainer.UserModel.findOne({token: token, is_deleted: false}, function (err, user) {
 
                     bcrypt.hash(formValues.password, 10, function (err, hash) {
 
@@ -275,13 +275,24 @@ module.exports = {
 
         var username = req.session.username;
 
-        model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            model.ModelContainer.QuestionModel.find({user_id: user._id}, function (err, questions) {
+            model.ModelContainer.QuestionModel.find({
+                user_id: user._id,
+                is_deleted: false
+            })
+                .sort({created_at: -1})
+                .limit(10)
+                .exec(function (err, questions) {
 
                 var gravatar_url = gravatar.url(user.email, {s: '400'});
 
-                res.render('dashboard', {user: user, questions: questions, layout: 'admin', gravatar_url: gravatar_url});
+                res.render('dashboard', {
+                    user: user,
+                    questions: questions,
+                    layout: 'admin',
+                    gravatar_url: gravatar_url
+                });
 
             });
 
@@ -289,13 +300,13 @@ module.exports = {
 
     },
 
-    upload: function(req, res) {
+    upload: function (req, res) {
 
         var image = req.files.file.name;
 
-        if(image) {
+        if (image) {
 
-            uploader.upload('public/upload/' + image, image, function(response) {
+            uploader.upload('public/upload/' + image, image, function (response) {
 
                 console.log(response);
                 res.json(response);
@@ -307,17 +318,20 @@ module.exports = {
     addQuestion: function (req, res) {
 
         var question_title = req.body.question_title;
+        var image = req.body.image;
         var question_slug = slug(question_title);
         var question_identifier = shortid.generate();
         var username = req.session.username;
 
-        model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
             var question = {
                 question_title: question_title,
                 question_slug: question_slug,
                 question_identifier: question_identifier,
-                user_id: user._id
+                image: image,
+                user_id: user._id,
+                user_username: user.username
             };
 
             model.ModelContainer.QuestionModel(question).save(function (err, q) {
@@ -334,9 +348,12 @@ module.exports = {
 
         var question_slug = req.params.question_slug;
 
-        model.ModelContainer.QuestionModel.findOne({question_slug: question_slug}, function (err, q) {
+        model.ModelContainer.QuestionModel.findOne({
+            question_slug: question_slug,
+            is_deleted: false
+        }, function (err, q) {
 
-            if(q) {
+            if (q) {
                 res.redirect('/404');
             }
             else {

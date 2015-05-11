@@ -10,12 +10,16 @@ var express = require('express'),
     multer  = require('multer'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
-    auth = require('./auth');
+    auth = require('./auth'),
+    moment = require('moment'),
+    handlebars_helper = require('./handlebars_helper');
 
 // Create an express instance and set a port variable
 var app = express();
 var port = config.values.port;
 handlebars.registerHelper(layouts(handlebars));
+
+handlebars.registerHelper("dateAgo", handlebars_helper.dateAgo);
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies

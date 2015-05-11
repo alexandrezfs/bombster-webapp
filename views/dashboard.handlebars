@@ -51,159 +51,37 @@
 
                 <br><br>
 
-                <div class="feed-item feed-item-idea">
+                {{#each questions}}
 
-                    <div class="feed-icon bg-primary">
-                        <i class="fa fa-lightbulb-o"></i>
-                    </div> <!-- /.feed-icon -->
+                    <div class="feed-item feed-item-question">
 
-                    <div class="feed-subject">
-                        <p><a href="javascript:;">Nikita Williams</a> shared an idea: <a href="javascript:;">Create an Awesome Idea</a></p>
-                    </div> <!-- /.feed-subject -->
+                        <div class="feed-icon bg-secondary">
+                            <i class="fa fa-question"></i>
+                        </div> <!-- /.feed-icon -->
 
-                    <div class="feed-content">
-                        <ul class="icons-list">
-                            <li>
-                                <i class="icon-li fa fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-                            </li>
-                        </ul>
-                    </div> <!-- /.feed-content -->
+                        <div class="feed-subject">
+                            <p><a href="/u/{{this.user_username}}">{{this.user_username}}</a> posted <a href="/q/{{this.question_slug}}">a question</a></p>
+                        </div> <!-- /.feed-subject -->
 
-                    <div class="feed-actions">
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
+                        <div class="feed-content">
+                            <ul class="icons-list">
+                                <li>
+                                    <i class="icon-li fa fa-quote-left"></i>
+                                    {{this.question_title}}
+                                </li>
+                            </ul>
+                        </div> <!-- /.feed-content -->
 
-                        <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
-                    </div> <!-- /.feed-actions -->
+                        <div class="feed-actions">
+                            <a href="#" class="pull-left"><i class="fa fa-smile-o"></i> {{this.vote_yes_count}}</a>
+                            <a href="#" class="pull-left"><i class="fa fa-frown-o"></i> {{this.vote_no_count}}</a>
 
-                </div> <!-- /.feed-item -->
+                            <a href="#" class="pull-right"><i class="fa fa-clock-o"></i> {{dateAgo this.created_at}}</a>
+                        </div> <!-- /.feed-actions -->
 
+                    </div> <!-- /.feed-item -->
 
-
-                <div class="feed-item feed-item-image">
-
-                    <div class="feed-icon bg-secondary">
-                        <i class="fa fa-picture-o"></i>
-                    </div> <!-- /.feed-icon -->
-
-                    <div class="feed-subject">
-                        <p><a href="javascript:;">Nikita Williams</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
-                    </div> <!-- /.feed-subject -->
-
-                    <div class="feed-content">
-                        <div class="thumbnail" style="width: 375px">
-                            <img src="./img/mockup.png" style="width: 100%;" alt="Gallery Image">
-                        </div> <!-- /.thumbnail -->
-                    </div> <!-- /.feed-content -->
-
-                    <div class="feed-actions">
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
-
-                        <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
-                    </div> <!-- /.feed-actions -->
-
-                </div> <!-- /.feed-item -->
-
-
-
-                <div class="feed-item feed-item-file">
-
-                    <div class="feed-icon bg-success">
-                        <i class="fa fa-cloud-upload"></i>
-                    </div> <!-- /.feed-icon -->
-
-                    <div class="feed-subject">
-                        <p><a href="javascript:;">Nikita Williams</a> posted the <strong>4 files</strong>: <a href="javascript:;">Annual Reports</a></p>
-                    </div> <!-- /.feed-subject -->
-
-                    <div class="feed-content">
-                        <ul class="icons-list">
-                            <li>
-                                <i class="icon-li fa fa-file-text-o"></i>
-                                <a href="javascript:;">Annual Report 2007</a> - annual_report_2007.pdf
-                            </li>
-
-                            <li>
-                                <i class="icon-li fa fa-file-text-o"></i>
-                                <a href="javascript:;">Annual Report 2008</a> - annual_report_2007.pdf
-                            </li>
-
-                            <li>
-                                <i class="icon-li fa fa-file-text-o"></i>
-                                <a href="javascript:;">Annual Report 2009</a> - annual_report_2007.pdf
-                            </li>
-
-                            <li>
-                                <i class="icon-li fa fa-file-text-o"></i>
-                                <a href="javascript:;">Annual Report 2010</a> - annual_report_2007.pdf
-                            </li>
-                        </ul>
-                    </div> <!-- /.feed-content -->
-
-                    <div class="feed-actions">
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
-
-                        <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
-                    </div> <!-- /.feed-actions -->
-
-                </div> <!-- /.feed-item -->
-
-
-
-                <div class="feed-item feed-item-bookmark">
-
-                    <div class="feed-icon bg-tertiary">
-                        <i class="fa fa-bookmark"></i>
-                    </div> <!-- /.feed-icon -->
-
-                    <div class="feed-subject">
-                        <p><a href="javascript:;">Nikita Williams</a> bookmarked a page on Delicious: <a href="javascript:;">Jumpstart Themes</a></p>
-                    </div> <!-- /.feed-subject -->
-
-                    <div class="feed-content">
-                    </div> <!-- /.feed-content -->
-
-                    <div class="feed-actions">
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
-
-                        <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
-                    </div> <!-- /.feed-actions -->
-
-                </div> <!-- /.feed-item -->
-
-
-
-                <div class="feed-item feed-item-question">
-
-                    <div class="feed-icon bg-secondary">
-                        <i class="fa fa-question"></i>
-                    </div> <!-- /.feed-icon -->
-
-                    <div class="feed-subject">
-                        <p><a href="javascript:;">Nikita Williams</a> posted the question: <a href="javascript:;">Who can I call to get a new parking pass for the Rowan Building?</a></p>
-                    </div> <!-- /.feed-subject -->
-
-                    <div class="feed-content">
-                        <ul class="icons-list">
-                            <li>
-                                <i class="icon-li fa fa-quote-left"></i>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.
-                            </li>
-                        </ul>
-                    </div> <!-- /.feed-content -->
-
-                    <div class="feed-actions">
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-thumbs-up"></i> 123</a>
-                        <a href="javascript:;" class="pull-left"><i class="fa fa-comment-o"></i> 29</a>
-
-                        <a href="javascript:;" class="pull-right"><i class="fa fa-clock-o"></i> 2 days ago</a>
-                    </div> <!-- /.feed-actions -->
-
-                </div> <!-- /.feed-item -->
+                {{/each}}
 
                 <br class="visible-xs">
                 <br class="visible-xs">
@@ -223,19 +101,19 @@
 
                     <a href="#" class="list-group-item">
                         <h3 class="pull-right"><i class="fa fa-retweet text-primary"></i></h3>
-                        <h4 class="list-group-item-heading">38,847</h4>
+                        <h4 class="list-group-item-heading">{{user.reshare_count}}</h4>
                         <p class="list-group-item-text">Total Reshares</p>
                     </a>
 
                     <a href="#" class="list-group-item">
                         <h3 class="pull-right"><i class="fa fa-smile-o  text-primary"></i></h3>
-                        <h4 class="list-group-item-heading">3,482</h4>
+                        <h4 class="list-group-item-heading">{{user.vote_yes_count}}</h4>
                         <p class="list-group-item-text">Total Yes Votes</p>
                     </a>
 
                     <a href="#" class="list-group-item">
                         <h3 class="pull-right"><i class="fa fa-frown-o  text-primary"></i></h3>
-                        <h4 class="list-group-item-heading">5,845</h4>
+                        <h4 class="list-group-item-heading">{{user.vote_no_count}}</h4>
                         <p class="list-group-item-text">Total No Votes</p>
                     </a>
                 </div> <!-- /.list-group -->
@@ -249,7 +127,7 @@
                 </div> <!-- /.heading-block -->
 
                 <div class="well">
-                    
+
                     <ul class="icons-list text-md">
 
                         <li>
@@ -263,7 +141,7 @@
                         <li>
                             <i class="icon-li fa fa-location-arrow"></i>
 
-                            <strong>Rod</strong> followed the research interest: <a href="javascript:;">Open Access Books in Linguistics</a>.
+                            <strong>Rod</strong> followed the research interest: <a href="#">Open Access Books in Linguistics</a>.
                             <br>
                             <small>about 23 hours ago</small>
                         </li>

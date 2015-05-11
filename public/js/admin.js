@@ -10,22 +10,21 @@ $('document').ready(function() {
 
             if(question_title.length > 0) {
 
-                $.post('/question/add', {question_title: question_title}, function(response) {
-
-                    console.log(response);
-
+                $.post('/question/add', {
+                    question_title: question_title,
+                    image: imgForUpload
+                }, function(response) {
+                    $('#question_title').val('');
+                    deleteImage();
                 });
             }
 
         });
-
     }
 
     if($("#questionImageDropzone").length > 0) {
-
         initDropzone();
     }
-
 });
 
 function initDropzone() {
