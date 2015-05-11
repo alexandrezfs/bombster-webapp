@@ -51,7 +51,7 @@
 
                 <br><br>
 
-                {{#each questions}}
+                {{#each timelineItems}}
 
                     <div class="feed-item feed-item-question">
 
@@ -60,14 +60,14 @@
                         </div> <!-- /.feed-icon -->
 
                         <div class="feed-subject">
-                            <p><a href="/u/{{this.user_username}}">{{this.user_username}}</a> posted <a href="/q/{{this.question_slug}}">a question</a></p>
+                            <p>{{{this.user.username}}} posted a new question</p>
                         </div> <!-- /.feed-subject -->
 
                         <div class="feed-content">
                             <ul class="icons-list">
                                 <li>
                                     <i class="icon-li fa fa-quote-left"></i>
-                                    {{this.question_title}}
+                                    {{this.content}}
                                 </li>
                             </ul>
                         </div> <!-- /.feed-content -->

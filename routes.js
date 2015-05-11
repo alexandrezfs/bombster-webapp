@@ -277,19 +277,22 @@ module.exports = {
 
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            model.ModelContainer.QuestionModel.find({
-                user_id: user._id,
+            model.ModelContainer.TimelineModel.find({
+                user: user._id,
                 is_deleted: false
             })
                 .sort({created_at: -1})
                 .limit(10)
-                .exec(function (err, questions) {
+                .populate('user')
+                .exec(function (err, timelineItems) {
+
+                    console.log(timelineItems);
 
                 var gravatar_url = gravatar.url(user.email, {s: '400'});
 
                 res.render('dashboard', {
                     user: user,
-                    questions: questions,
+                    timelineItems: timelineItems,
                     layout: 'admin',
                     gravatar_url: gravatar_url
                 });
@@ -330,13 +333,28 @@ module.exports = {
                 question_slug: question_slug,
                 question_identifier: question_identifier,
                 image: image,
-                user_id: user._id,
+                user: user._id,
                 user_username: user.username
             };
 
             model.ModelContainer.QuestionModel(question).save(function (err, q) {
 
-                res.json(q);
+                //Add to timeline
+                var timeline = {
+                    user: user._id,
+                    type: "post-question",
+                    object_id: q._id,
+                    title: 'post-question',
+                    content: q.question_title,
+                    image: q.image,
+                    url: '/q/' + q.question_identifier
+                };
+
+                model.ModelContainer.TimelineModel(timeline).save(function(err, t) {
+
+                    res.json(t);
+
+                });
 
             });
 

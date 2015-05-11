@@ -36,7 +36,7 @@ var QuestionSchema = new Schema({
     question_slug: String,
     question_identifier: String,
     image: String,
-    user_id: ObjectId,
+    user: {type: ObjectId, ref: 'User'},
     user_username: String,
     vote_yes_count: {type: Number, default: 0},
     vote_no_count: {type: Number, default: 0},
@@ -52,22 +52,33 @@ var VoteSchema = new Schema({
     question_id: ObjectId,
     vote_value: String,
     fingerprints: String,
-    user_id: ObjectId
+    user: {type: ObjectId, ref: 'User'},
+    created_at: {type: Date, default: Date.now},
+    updated_at: {type: Date, default: Date.now}
 });
 
 var TimelineSchema = new Schema({
-    user_id: ObjectId,
+    user: {type: ObjectId, ref: 'User'},
     type: String,
-    object_name: String,
-    object_id: ObjectId
+    title: String,
+    content: String,
+    url: String,
+    image: String,
+    object_id: ObjectId,
+    is_deleted: {type: Boolean, default: false},
+    created_at: {type: Date, default: Date.now},
+    updated_at: {type: Date, default: Date.now}
 });
 
 var NotificationSchema = new Schema({
-    user_id: ObjectId,
-    type: String,
+    user: {type: ObjectId, ref: 'User'},
+    type: {type: ObjectId, ref: 'User'},
     read: {type: Boolean, default: false},
-    object_name: String,
-    object_id: ObjectId
+    title: String,
+    content: String,
+    url: String,
+    created_at: {type: Date, default: Date.now},
+    updated_at: {type: Date, default: Date.now}
 });
 
 exports.ModelContainer = {
