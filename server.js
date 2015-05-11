@@ -49,7 +49,7 @@ app.post('/password/reset', routes.passwordResetProcess);
 app.get('/password/reset-success', routes.passwordResetSuccess);
 app.get('/dashboard', auth.authMiddleware, routes.dashboard);
 app.post('/question/add', routes.addQuestion);
-app.get('/q/:question_slug', routes.question);
+app.get('/q/:question_identifier', routes.question);
 app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 

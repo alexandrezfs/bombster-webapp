@@ -60,7 +60,7 @@
                         </div> <!-- /.feed-icon -->
 
                         <div class="feed-subject">
-                            <p>{{{this.user.username}}} posted a new question</p>
+                            <p><a href="/u/{{this.user.username}}">{{{this.user.username}}}</a> posted <a href="{{this.url}}">a new question.</a></p>
                         </div> <!-- /.feed-subject -->
 
                         <div class="feed-content">
@@ -73,8 +73,8 @@
                         </div> <!-- /.feed-content -->
 
                         <div class="feed-actions">
-                            <a href="#" class="pull-left"><i class="fa fa-smile-o"></i> {{this.vote_yes_count}}</a>
-                            <a href="#" class="pull-left"><i class="fa fa-frown-o"></i> {{this.vote_no_count}}</a>
+                            <a href="#" class="pull-left"><i class="fa fa-smile-o"></i> {{this.question.vote_yes_count}}</a>
+                            <a href="#" class="pull-left"><i class="fa fa-frown-o"></i> {{this.question.vote_no_count}}</a>
 
                             <a href="#" class="pull-right"><i class="fa fa-clock-o"></i> {{dateAgo this.created_at}}</a>
                         </div> <!-- /.feed-actions -->

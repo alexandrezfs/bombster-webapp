@@ -1,18 +1,49 @@
-<section>
-    <div class="container">
+<main>
 
-        <div class="row">
+    <div class="content">
 
-            <div class="col-md-4 col-sm-6">
+        <div class="intro">
+            <h2>
                 {{question.question_title}}
-                <button id="yes">Yes</button>
-                <button id="no">No</button>
-            </div>
-
+            </h2>
         </div>
 
-        <input type="hidden" id="question_id" value="{{question._id}}">
+        <div class="counter">
 
-    </div>
-    <!--end of container-->
-</section>
+            <h3 class="text-primary">Yes or No ?</h3>
+
+            <ul class="countdown list-inline">
+                <li>
+                    <span class="days">00</span>
+                    <span class="days_ref">days</span>
+                </li>
+                <li>
+                    <span class="hours">00</span>
+                    <span class="hours_ref">hours</span>
+                </li>
+                <li>
+                    <span class="minutes">00</span>
+                    <span class="minutes_ref">minutes</span>
+                </li>
+                <li>
+                    <span class="seconds">00</span>
+                    <span class="seconds_ref">seconds</span>
+                </li>
+            </ul>
+
+        </div> <!-- /.counter -->
+
+    </div> <!-- /.content -->
+
+    <form role="form" class="newsletter" method="post" action="./index.html">
+        <h3 class="">Let us know what your think !</h3>
+
+        <div class="input-group">
+        <span class="input-group-btn">
+            <button type="submit" class="btn btn-success" value="Subscribe" name="subscribe"><i class="fa fa-smile-o"></i> Yes</button>
+            <button type="submit" class="btn btn-primary" value="Subscribe" name="subscribe"><i class="fa fa-frown-o"></i> No</button>
+        </span>
+        </div>
+    </form> <!-- /.newsletter-form -->
+
+</main>

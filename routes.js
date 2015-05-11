@@ -284,20 +284,21 @@ module.exports = {
                 .sort({created_at: -1})
                 .limit(10)
                 .populate('user')
+                .populate('question')
                 .exec(function (err, timelineItems) {
 
                     console.log(timelineItems);
 
-                var gravatar_url = gravatar.url(user.email, {s: '400'});
+                    var gravatar_url = gravatar.url(user.email, {s: '400'});
 
-                res.render('dashboard', {
-                    user: user,
-                    timelineItems: timelineItems,
-                    layout: 'admin',
-                    gravatar_url: gravatar_url
+                    res.render('dashboard', {
+                        user: user,
+                        timelineItems: timelineItems,
+                        layout: 'admin',
+                        gravatar_url: gravatar_url
+                    });
+
                 });
-
-            });
 
         });
 
@@ -343,14 +344,14 @@ module.exports = {
                 var timeline = {
                     user: user._id,
                     type: "post-question",
-                    object_id: q._id,
+                    question: q._id,
                     title: 'post-question',
                     content: q.question_title,
                     image: q.image,
                     url: '/q/' + q.question_identifier
                 };
 
-                model.ModelContainer.TimelineModel(timeline).save(function(err, t) {
+                model.ModelContainer.TimelineModel(timeline).save(function (err, t) {
 
                     res.json(t);
 
@@ -364,24 +365,36 @@ module.exports = {
 
     question: function (req, res) {
 
-        var question_slug = req.params.question_slug;
+        var question_identifier = req.params.question_identifier;
 
-        model.ModelContainer.QuestionModel.findOne({
-            question_slug: question_slug,
-            is_deleted: false
-        }, function (err, q) {
+        var username = req.session.username;
 
-            if (q) {
-                res.redirect('/404');
-            }
-            else {
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-                q.views_count++;
-                q.save();
+            model.ModelContainer.QuestionModel.findOne({
+                question_identifier: question_identifier,
+                is_deleted: false
+            }, function (err, q) {
 
-                res.render('question', {question: q, layout: 'admin'});
-            }
+                if (!q) {
+                    res.redirect('/404');
+                }
+                else {
 
+                    q.views_count++;
+                    q.save();
+
+                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                    res.render('question', {
+                        question: q,
+                        layout: 'release',
+                        user: user,
+                        gravatar_url: gravatar_url
+                    });
+                }
+
+            });
         });
 
     },
@@ -393,7 +406,7 @@ module.exports = {
         var fingerprints = req.body.fingerprints;
 
         var vote = {
-            question_id: question_id,
+            question: question_id,
             vote_value: vote_value,
             fingerprints: fingerprints
         };

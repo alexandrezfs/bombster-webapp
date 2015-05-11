@@ -49,7 +49,7 @@ var QuestionSchema = new Schema({
 });
 
 var VoteSchema = new Schema({
-    question_id: ObjectId,
+    question: ObjectId,
     vote_value: String,
     fingerprints: String,
     user: {type: ObjectId, ref: 'User'},
@@ -64,7 +64,7 @@ var TimelineSchema = new Schema({
     content: String,
     url: String,
     image: String,
-    object_id: ObjectId,
+    question: {type: ObjectId, ref: 'Question'},
     is_deleted: {type: Boolean, default: false},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
