@@ -49,9 +49,9 @@ var QuestionSchema = new Schema({
 });
 
 var VoteSchema = new Schema({
-    question: ObjectId,
     vote_value: String,
     fingerprints: String,
+    question: {type: ObjectId, ref: 'Question'},
     user: {type: ObjectId, ref: 'User'},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}

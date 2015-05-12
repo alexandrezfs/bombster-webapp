@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Launch - MVP Ready</title>
+    <title>Question - Bombster.io</title>
 
     <!-- Google Font: Open Sans -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/bower_components/vegas/dist/jquery.vegas.min.css">
 
     <link rel="stylesheet" href="/css/mvpready-launch.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -73,10 +74,21 @@
 
 <script src="/bower_components/vegas/dist/jquery.vegas.min.js"></script>
 <script src="/bower_components/downcount/jquery.downCount.js"></script>
+<script src="/bower_components/fingerprint/fingerprint.js"></script>
 
 <script src="/global/js/mvpready-core.js"></script>
 <script src="/global/js/mvpready-helpers.js"></script>
 <script src="/js/mvpready-launch.js"></script>
+<script src="/js/vote.js"></script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1411359452474265";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 </body>
 </html>

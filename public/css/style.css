@@ -12,3 +12,12 @@
     max-height: 20px;
     margin-top: 5px;
 }
+
+.share {
+    margin-top: 10px;
+}
+
+.fb-like {
+    position: relative;
+    bottom: 4px;
+}

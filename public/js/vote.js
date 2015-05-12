@@ -3,11 +3,15 @@ $(document).ready(function () {
     var question_id = $('#question_id').val();
     var fingerprints = new Fingerprint().get();
 
-    console.log(fingerprints);
-
     if ($("#yes").length > 0 && $("#no").length > 0) {
 
         $("#yes").click(function () {
+
+            console.log({
+                fingerprints: fingerprints,
+                question_id: question_id,
+                vote_value: 'yes'
+            });
 
             $.post('/vote', {
                 fingerprints: fingerprints,

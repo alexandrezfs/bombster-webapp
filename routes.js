@@ -8,6 +8,7 @@ var slug = require('slug');
 var shortid = require('shortid');
 var gravatar = require('gravatar');
 var uploader = require('./upload');
+var vote_utils = require('./vote');
 
 module.exports = {
 
@@ -367,34 +368,27 @@ module.exports = {
 
         var question_identifier = req.params.question_identifier;
 
-        var username = req.session.username;
+        model.ModelContainer.QuestionModel.findOne({
+            question_identifier: question_identifier,
+            is_deleted: false
+        }, function (err, q) {
 
-        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+            console.log(q);
 
-            model.ModelContainer.QuestionModel.findOne({
-                question_identifier: question_identifier,
-                is_deleted: false
-            }, function (err, q) {
+            if (!q) {
+                res.redirect('/404');
+            }
+            else {
 
-                if (!q) {
-                    res.redirect('/404');
-                }
-                else {
+                q.views_count++;
+                q.save();
 
-                    q.views_count++;
-                    q.save();
+                res.render('question', {
+                    question: q,
+                    layout: 'release'
+                });
+            }
 
-                    var gravatar_url = gravatar.url(user.email, {s: '400'});
-
-                    res.render('question', {
-                        question: q,
-                        layout: 'release',
-                        user: user,
-                        gravatar_url: gravatar_url
-                    });
-                }
-
-            });
         });
 
     },
@@ -405,48 +399,35 @@ module.exports = {
         var vote_value = req.body.vote_value;
         var fingerprints = req.body.fingerprints;
 
+        var username = req.session.username;
+
         var vote = {
-            question: question_id,
             vote_value: vote_value,
-            fingerprints: fingerprints
+            fingerprints: fingerprints,
+            question: question_id
         };
 
-        model.ModelContainer.VoteModel.findOne({
-            fingerprints: fingerprints,
-            question_id: question_id
-        }, function (err, voteVerif) {
+        if (username) {
 
-            if (voteVerif) {
-                res.json({message: 'already voted'});
-            }
-            else {
+            model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
 
-                model.ModelContainer.QuestionModel.findOne(function (err, q) {
-                    model.ModelContainer.VoteModel(vote).save(function (err, v) {
+                vote.user = user._id;
 
-                        if (vote_value == 'yes') {
-                            q.vote_yes_count++;
-                        }
-                        else if (vote_value == 'no') {
-                            q.vote_no_count++;
-                        }
+                vote_utils.vote(vote, function (response) {
 
-                        q.save(function (err, qSaved) {
+                    res.json(response);
 
-                            res.json({
-                                message: 'success',
-                                question: qSaved
-                            });
-
-                        });
-
-                    });
                 });
+            });
+        }
+        else {
 
-            }
+            vote_utils.vote(vote, function (response) {
 
-        });
+                res.json(response);
 
+            });
+
+        }
     }
-
 };
