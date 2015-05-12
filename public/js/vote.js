@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    setInterval(function() {
+        reloadVoteData();
+    }, 20000);
+
     var question_id = $('#question_id').val();
     var fingerprints = new Fingerprint().get();
 
@@ -62,6 +66,23 @@ function displayResult(response) {
     }
     else {
         voteSuccess();
+        assignVoteCounts(response);
     }
+}
 
+function reloadVoteData() {
+
+    var question_id = $('#question_id').val();
+
+    $.get('/api/question/' + question_id, function(response) {
+
+        console.log(response);
+
+        assignVoteCounts(response);
+    });
+}
+
+function assignVoteCounts(response) {
+    $('#yes-count').text(response.vote_yes_count);
+    $('#no-count').text(response.vote_no_count);
 }

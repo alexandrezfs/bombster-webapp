@@ -5,6 +5,7 @@ var express = require('express'),
     layouts = require('handlebars-layouts'),
     http = require('http'),
     routes = require('./routes'),
+    api_routes = require('./api_routes'),
     bodyParser = require('body-parser'),
     config = require('./config'),
     multer  = require('multer'),
@@ -53,6 +54,7 @@ app.get('/q/:question_identifier', routes.question);
 app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 
+app.get('/api/question/:_id', api_routes.getQuestion);
 
 //Redirect no 200 status to /
 app.use(function (req, res, next) {
