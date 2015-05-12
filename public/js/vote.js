@@ -20,6 +20,7 @@ $(document).ready(function () {
             }, function (response) {
 
                 console.log(response);
+                displayResult(response);
             });
 
         });
@@ -33,6 +34,7 @@ $(document).ready(function () {
             }, function (response) {
 
                 console.log(response);
+                displayResult(response);
             });
 
         });
@@ -40,3 +42,26 @@ $(document).ready(function () {
     }
 
 });
+
+function voteSuccess() {
+
+    $('#vote-success').removeClass('hidden');
+
+}
+
+function voteError() {
+
+    $('#vote-error').removeClass('hidden');
+
+}
+
+function displayResult(response) {
+
+    if(response.message && response.message == 'already voted') {
+        voteError();
+    }
+    else {
+        voteSuccess();
+    }
+
+}

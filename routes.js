@@ -9,6 +9,7 @@ var shortid = require('shortid');
 var gravatar = require('gravatar');
 var uploader = require('./upload');
 var vote_utils = require('./vote');
+var url = require('./url');
 
 module.exports = {
 
@@ -367,6 +368,7 @@ module.exports = {
     question: function (req, res) {
 
         var question_identifier = req.params.question_identifier;
+        var fullUrl = url.currentUrl(req);
 
         model.ModelContainer.QuestionModel.findOne({
             question_identifier: question_identifier,
@@ -385,7 +387,8 @@ module.exports = {
 
                 res.render('question', {
                     question: q,
-                    layout: 'release'
+                    layout: 'release',
+                    url: fullUrl
                 });
             }
 

@@ -17,13 +17,21 @@
                         class="fa fa-frown-o"></i> {{question.vote_no_count}}</h2></div>
             </div>
 
+            {{#if question.image}}
+                <div class="row">
+                    <div class="col-lg-12 question-img">
+                        <img src="{{question.image}}">
+                    </div>
+                </div>
+            {{/if}}
+
         </div>
 
         <div class="share row">
 
             <div class="col-lg-12">
 
-                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/"
+                <div class="fb-like" data-href="{{url}}"
                      data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
 
                 <a href="https://twitter.com/share" class="twitter-share-button" data-via="alex_zhixin">Tweet</a>
@@ -44,19 +52,29 @@
     </div>
 
     <div class="newsletter">
+
+        <div class="alert alert-success hidden" id="vote-success" role="alert">
+            <a href="#" class="alert-link">Thanks for your vote !</a>
+        </div>
+
+        <div class="alert alert-danger hidden" id="vote-error" role="alert">
+            <a href="#" class="alert-link">You already voted on this question.</a>
+        </div>
+
         <h3 class="">Let us know what you think !</h3>
 
         <div class="input-group">
-        <span class="input-group-btn">
-            <input type="hidden" id="question_id" value="{{question._id}}">
-            <button id="yes" class="btn btn-success" value="Subscribe" name="subscribe"><i
-                    class="fa fa-smile-o"></i> Yes
-            </button>
-            <button id="no" class="btn btn-primary" value="Subscribe" name="subscribe"><i
-                    class="fa fa-frown-o"></i> No
-            </button>
-        </span>
+            <span class="input-group-btn">
+                <input type="hidden" id="question_id" value="{{question._id}}">
+                <button id="yes" class="btn btn-success" value="Subscribe" name="subscribe"><i
+                        class="fa fa-smile-o"></i> Yes
+                </button>
+                <button id="no" class="btn btn-primary" value="Subscribe" name="subscribe"><i
+                        class="fa fa-frown-o"></i> No
+                </button>
+            </span>
         </div>
+
     </div>
 
 </main>

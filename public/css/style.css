@@ -21,3 +21,9 @@
     position: relative;
     bottom: 4px;
 }
+
+.question-img img {
+    max-height: 300px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}

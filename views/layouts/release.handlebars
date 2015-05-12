@@ -2,16 +2,18 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Question - Bombster.io</title>
+    <title>{{question.question_title}} - Bombster.io</title>
 
     <!-- Google Font: Open Sans -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700">
 
     <!-- Font Awesome CSS -->
@@ -31,7 +33,7 @@
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 </head>
 
 <body class="">
@@ -42,14 +44,19 @@
 
 <div class="countdown-wrapper">
 
-    <header><img src="/img/logo-admin.png" alt="Spatial coming soon template"></header>
+    <header>
+        <a href="/">
+            <img src="/img/logo-admin.png" alt="Bombster logo">
+        </a>
+    </header>
 
     {{{body}}}
 
     <footer>
         <ul class="list-inline">
             <li>
-                <a href="http://facebook.com" class="ui-tooltip" title="Facebook" data-placement="bottom" target="_blank">
+                <a href="http://facebook.com" class="ui-tooltip" title="Facebook" data-placement="bottom"
+                   target="_blank">
                     <i class="fa fa-facebook"></i>
                 </a>
             </li>
@@ -59,14 +66,16 @@
                 </a>
             </li>
             <li>
-                <a href="http://linkedin.com" class="ui-tooltip" title="LinkedIn" data-placement="bottom" target="_blank">
+                <a href="http://linkedin.com" class="ui-tooltip" title="LinkedIn" data-placement="bottom"
+                   target="_blank">
                     <i class="fa fa-linkedin"></i>
                 </a>
             </li>
         </ul>
     </footer>
 
-</div> <!-- /.wrapper -->
+</div>
+<!-- /.wrapper -->
 
 <!-- Core JS -->
 <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -82,10 +91,11 @@
 <script src="/js/vote.js"></script>
 
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script>(function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
+    js = d.createElement(s);
+    js.id = id;
     js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1411359452474265";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
