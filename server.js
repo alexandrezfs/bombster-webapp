@@ -55,6 +55,7 @@ app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
+app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
 
 //Redirect no 200 status to /
 app.use(function (req, res, next) {

@@ -10,6 +10,7 @@ var gravatar = require('gravatar');
 var uploader = require('./upload');
 var vote_utils = require('./vote');
 var url = require('./url');
+var mongoosePaginate = require('mongoose-paginate');
 
 module.exports = {
 
@@ -17,11 +18,30 @@ module.exports = {
 
         var _id = req.params._id;
 
-        model.ModelContainer.QuestionModel.findOne({_id: _id}, function(err, question) {
+        model.ModelContainer.QuestionModel.findOne({_id: _id}, function (err, question) {
 
             res.json(question);
 
         });
+    },
+
+    getPaginatedTimeline: function (req, res) {
+
+        var page = req.params.page;
+        var user_id = req.params.user_id;
+
+        model.ModelContainer.TimelineModel.paginate({user: user_id}, page, 10, function (error, pageCount, paginatedResults, itemCount) {
+            if (error) {
+                console.error(error);
+                res.json(error);
+            } else {
+                console.log('Pages:', pageCount);
+                console.log(paginatedResults);
+
+                res.json(paginatedResults);
+            }
+        }, {populate: 'question', sortBy: {created_at: -1}});
+
     }
 
 };

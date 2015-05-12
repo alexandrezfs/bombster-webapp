@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var config = require('./config');
 var Schema = mongoose.Schema;
+var mongoosePaginate = require('mongoose-paginate');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
@@ -69,6 +70,9 @@ var TimelineSchema = new Schema({
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
 });
+
+TimelineSchema.plugin(mongoosePaginate);
+
 
 var NotificationSchema = new Schema({
     user: {type: ObjectId, ref: 'User'},
