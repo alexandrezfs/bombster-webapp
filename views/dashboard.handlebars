@@ -82,6 +82,14 @@
                                         {{this.content}}
                                     </li>
                                 </ul>
+
+                                {{#if this.image}}
+                                    <div class="thumbnail" style="width: 375px">
+                                        <a href="{{this.image}}" class="ui-lightbox">
+                                            <img src="{{this.image}}" style="width: 100%;" alt="Gallery Image">
+                                        </a>
+                                    </div> <!-- /.thumbnail -->
+                                {{/if}}
                             </div>
                             <!-- /.feed-content -->
 

@@ -1,5 +1,6 @@
 var imgForUpload = null;
 var loadPage = 2;
+var stop_load_timeline = false;
 
 $('document').ready(function() {
 
@@ -9,7 +10,10 @@ $('document').ready(function() {
             if  ($(window).scrollTop() == $(document).height() - $(window).height()){
 
                 console.log('Scrolled to waypoint!');
-                loadNextPage(loadPage);
+
+                if(!stop_load_timeline) {
+                    loadNextPage(loadPage);
+                }
             }
         });
 
@@ -53,10 +57,17 @@ function loadNextPage(page) {
 
         console.log(data);
 
-        $('#timeline-loader').hide();
-        $('#timeline-container').append(timelineToHtml(data));
+        if(data.length === 0) {
+            $('#timeline-loader').hide();
+            stop_load_timeline = true;
+        }
+        else {
 
-        loadPage++;
+            $('#timeline-loader').hide();
+            $('#timeline-container').append(timelineToHtml(data));
+
+            loadPage++;
+        }
 
     });
 }

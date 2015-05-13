@@ -54,6 +54,7 @@ app.post('/question/add', routes.addQuestion);
 app.get('/q/:question_identifier', routes.question);
 app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
+app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);

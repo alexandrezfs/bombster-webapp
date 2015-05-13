@@ -446,5 +446,47 @@ module.exports = {
             });
 
         }
+    },
+
+    userQuestions: function (req, res) {
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            model.ModelContainer.QuestionModel.find({
+                user: user._id,
+                is_deleted: false
+            })
+                .sort({created_at: -1})
+                .limit(10)
+                .populate('user')
+                .exec(function (err, questionItems) {
+
+                    model.ModelContainer.NotificationModel.find({user: user._id})
+                        .sort({created_at: -1})
+                        .limit(100)
+                        .exec(function (err, notifications) {
+
+                            model.ModelContainer.NotificationModel.count({user: user._id, read: false})
+                                .exec(function (err, noread_notifications_count) {
+
+                                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                                    res.render('user_questions', {
+                                        user: user,
+                                        questionItems: questionItems,
+                                        layout: 'admin',
+                                        gravatar_url: gravatar_url,
+                                        notifications: notifications,
+                                        noread_notifications_count: noread_notifications_count
+                                    });
+
+                                });
+                        });
+
+                });
+
+        });
     }
 };
