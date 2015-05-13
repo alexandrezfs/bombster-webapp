@@ -355,7 +355,10 @@ module.exports = {
 
                 model.ModelContainer.TimelineModel(timeline).save(function (err, t) {
 
-                    res.json(t);
+                    t.populate('question')
+                        .populate('user', function (err, t) {
+                            res.json(t);
+                        });
 
                 });
 

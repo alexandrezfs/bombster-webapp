@@ -40,7 +40,7 @@ module.exports = {
 
                 res.json(paginatedResults);
             }
-        }, {populate: 'question', sortBy: {created_at: -1}});
+        }, {populate: ['question', 'user'], sortBy: {created_at: -1}});
 
     }
 
