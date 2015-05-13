@@ -289,16 +289,27 @@ module.exports = {
                 .populate('question')
                 .exec(function (err, timelineItems) {
 
-                    console.log(timelineItems);
+                    model.ModelContainer.NotificationModel.find({user: user._id})
+                        .sort({created_at: -1})
+                        .limit(100)
+                        .exec(function (err, notifications) {
 
-                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+                            model.ModelContainer.NotificationModel.count({user: user._id, read: false})
+                                .exec(function (err, noread_notifications_count) {
 
-                    res.render('dashboard', {
-                        user: user,
-                        timelineItems: timelineItems,
-                        layout: 'admin',
-                        gravatar_url: gravatar_url
-                    });
+                                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                                    res.render('dashboard', {
+                                        user: user,
+                                        timelineItems: timelineItems,
+                                        layout: 'admin',
+                                        gravatar_url: gravatar_url,
+                                        notifications: notifications,
+                                        noread_notifications_count: noread_notifications_count
+                                    });
+
+                                });
+                        });
 
                 });
 

@@ -76,8 +76,8 @@ TimelineSchema.plugin(mongoosePaginate);
 
 var NotificationSchema = new Schema({
     user: {type: ObjectId, ref: 'User'},
-    type: {type: ObjectId, ref: 'User'},
     read: {type: Boolean, default: false},
+    type: String,
     title: String,
     content: String,
     url: String,

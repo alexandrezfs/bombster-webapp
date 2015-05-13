@@ -21,6 +21,7 @@ var port = config.values.port;
 handlebars.registerHelper(layouts(handlebars));
 
 handlebars.registerHelper("dateAgo", handlebars_helper.dateAgo);
+handlebars.registerHelper("if_eq", handlebars_helper.if_eq);
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies

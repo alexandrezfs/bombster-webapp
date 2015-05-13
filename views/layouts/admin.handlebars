@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js"> <!--<![endif]-->
 <head>
     <title>Admin - Bombster.io</title>
 
@@ -13,7 +13,8 @@
     <meta name="author" content="">
 
     <!-- Google Font: Open Sans -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,300,700">
 
     <!-- Font Awesome CSS -->
@@ -55,7 +56,8 @@
                 <a href="/" class="navbar-brand navbar-brand-img">
                     <img src="/img/logo-admin.png" alt="Bombster">
                 </a>
-            </div> <!-- /.navbar-header -->
+            </div>
+            <!-- /.navbar-header -->
 
             <nav class="collapse navbar-collapse" role="navigation">
 
@@ -66,7 +68,7 @@
                         <a href="./page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell navbar-notification-icon"></i>
                             <span class="visible-xs-inline">&nbsp;Notifications</span>
-                            <b class="badge badge-primary">3</b>
+                            <b class="badge badge-primary">{{noread_notifications_count}}</b>
                         </a>
 
                         <div class="dropdown-menu">
@@ -75,39 +77,28 @@
 
                             <div class="notification-list">
 
-                                <a href="./page-notifications.html" class="notification">
-                                    <span class="notification-icon"><i class="fa fa-cloud-upload text-primary"></i></span>
-                                    <span class="notification-title">Notification Title</span>
-                                    <span class="notification-description">Praesent dictum nisl non est sagittis luctus.</span>
-                                    <span class="notification-time">20 minutes ago</span>
-                                </a> <!-- / .notification -->
+                                {{#each notifications}}
 
-                                <a href="./page-notifications.html" class="notification">
-                                    <span class="notification-icon"><i class="fa fa-ban text-secondary"></i></span>
-                                    <span class="notification-title">Notification Title</span>
-                                    <span class="notification-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                                    <span class="notification-time">20 minutes ago</span>
-                                </a> <!-- / .notification -->
+                                    <a href="{{this.url}}" class="notification">
+                                        <span class="notification-icon">
+                                            {{#if_eq this.type 'question-first-vote'}}
+                                                <i class="text-primary fa fa-trophy"></i>
+                                            {{/if_eq}}
+                                        </span>
+                                        <span class="notification-title">{{this.title}}</span>
+                                        <span class="notification-description">{{this.content}}</span>
+                                        <span class="notification-time">{{dateAgo this.created_at}}</span>
+                                    </a> <!-- / .notification -->
 
-                                <a href="./page-notifications.html" class="notification">
-                                    <span class="notification-icon"><i class="fa fa-warning text-tertiary"></i></span>
-                                    <span class="notification-title">Storage Space Almost Full!</span>
-                                    <span class="notification-description">Praesent dictum nisl non est sagittis luctus.</span>
-                                    <span class="notification-time">20 minutes ago</span>
-                                </a> <!-- / .notification -->
+                                {{/each}}
 
-                                <a href="./page-notifications.html" class="notification">
-                                    <span class="notification-icon"><i class="fa fa-ban text-danger"></i></span>
-                                    <span class="notification-title">Sync Error</span>
-                                    <span class="notification-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                                    <span class="notification-time">20 minutes ago</span>
-                                </a> <!-- / .notification -->
+                            </div>
+                            <!-- / .notification-list -->
 
-                            </div> <!-- / .notification-list -->
+                            <a href="/dashboard/notifications" class="notification-link">View All Notifications</a>
 
-                            <a href="./page-notifications.html" class="notification-link">View All Notifications</a>
-
-                        </div> <!-- / .dropdown-menu -->
+                        </div>
+                        <!-- / .dropdown-menu -->
 
                     </li>
 
@@ -164,7 +155,8 @@
 
             </nav>
 
-        </div> <!-- /.container -->
+        </div>
+        <!-- /.container -->
 
     </header>
 
@@ -205,13 +197,16 @@
 
             </nav>
 
-        </div> <!-- /.container -->
+        </div>
+        <!-- /.container -->
 
-    </div> <!-- /.mainnav -->
+    </div>
+    <!-- /.mainnav -->
 
     {{{ body }}}
 
-</div> <!-- /#wrapper -->
+</div>
+<!-- /#wrapper -->
 
 <footer class="footer">
     <div class="container">
