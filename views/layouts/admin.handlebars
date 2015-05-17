@@ -63,6 +63,8 @@
 
                 <ul class="nav navbar-nav navbar-left">
 
+                    {{#if user}}
+
                     <li class="dropdown navbar-notification">
 
                         <a href="./page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
@@ -102,9 +104,13 @@
 
                     </li>
 
+                    {{/if}}
+
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
+
+                    {{#if user}}
 
                     <li class="dropdown navbar-profile">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
@@ -151,6 +157,8 @@
 
                     </li>
 
+                    {{/if}}
+
                 </ul>
 
             </nav>
@@ -179,6 +187,8 @@
 
                 <ul class="mainnav-menu">
 
+                    {{#if user}}
+
                     <li>
                         <a href="/dashboard">
                             <i class="fa fa-weixin"></i>
@@ -192,6 +202,17 @@
                             Questions
                         </a>
                     </li>
+
+                    {{else}}
+
+                    <li>
+                        <a href="/">
+                            <i class="fa fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+
+                    {{/if}}
 
                 </ul>
 

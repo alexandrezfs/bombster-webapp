@@ -8,12 +8,14 @@ var express = require('express'),
     api_routes = require('./api_routes'),
     bodyParser = require('body-parser'),
     config = require('./config'),
-    multer  = require('multer'),
+    multer = require('multer'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     auth = require('./auth'),
     moment = require('moment'),
-    handlebars_helper = require('./handlebars_helper');
+    handlebars_helper = require('./handlebars_helper'),
+    gravatar = require('gravatar'),
+    model = require('./model');
 
 // Create an express instance and set a port variable
 var app = express();
@@ -30,7 +32,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(session({secret: 'token'}));
 app.use(bodyParser());
 app.use(cookieParser());
-app.use(multer({ dest: __dirname + '/public/upload/'}));
+app.use(multer({dest: __dirname + '/public/upload/'}));
 
 // Set handlebars as the templating engine
 app.use("/", express.static(__dirname + "/public/"));
@@ -61,7 +63,21 @@ app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
 //Redirect no 200 status to /
 app.use(function (req, res, next) {
     if (res.status != 200) {
-        res.render('404', {layout: 'admin'});
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            var email = null;
+            if(user) {
+                email = user.email;
+            }
+
+            var gravatar_url = gravatar.url(email, {s: '400'});
+            res.render('404', {layout: 'admin', gravatar_url: gravatar_url, user: user});
+
+        });
+
     }
 });
 
