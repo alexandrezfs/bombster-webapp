@@ -15,7 +15,8 @@ var express = require('express'),
     moment = require('moment'),
     handlebars_helper = require('./handlebars_helper'),
     gravatar = require('gravatar'),
-    model = require('./model');
+    model = require('./model'),
+    notifications = require('./notifications');
 
 // Create an express instance and set a port variable
 var app = express();
@@ -70,13 +71,21 @@ app.use(function (req, res, next) {
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
             var email = null;
-            if(user) {
+            if (user) {
                 email = user.email;
             }
 
-            var gravatar_url = gravatar.url(email, {s: '400'});
-            res.render('404', {layout: 'admin', gravatar_url: gravatar_url, user: user});
+            notifications.getUserNotificationsAndCount(user, function (response) {
 
+                var gravatar_url = gravatar.url(email, {s: '400'});
+
+                res.render('404', {
+                    layout: 'admin', gravatar_url: gravatar_url, user: user,
+                    notifications: response.notifications,
+                    noread_notifications_count: response.noread_notifications_count
+                });
+
+            });
         });
 
     }
