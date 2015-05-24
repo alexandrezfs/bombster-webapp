@@ -17,44 +17,46 @@
                         <thead>
                         <tr>
                             <th style="width: 150px">Image</th>
-                            <th>Description</th>
+                            <th>Question</th>
                             <th>Date</th>
-                            <th>File info</th>
+                            <th>Stats</th>
                             <th class="text-center">Actions</th>
                         </tr>
                         </thead>
 
                         <tbody>
+                        {{#each questionItems}}
                         <tr>
                             <td>
                                 <div class="thumbnail">
-                                    <div class="thumbnail-view">
-                                        <a class="thumbnail-view-hover ui-lightbox" href="../../global/img/photos/blur-lg.jpg">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        <img src="../../global/img/photos/blur-sm.jpg" width="125" alt="Gallery Image" />
-                                    </div>
+                                    {{#if this.image}}
+                                        <img src="{{this.image}}" width="125" alt="Gallery Image" />
+                                    {{else}}
+                                        <img src="http://placehold.it/200x100&text=Bombster.io" width="125" alt="Gallery Image" />
+                                    {{/if}}
                                 </div> <!-- /.thumbnail -->
                             </td>
 
-                            <td class="valign-middle"><a href="javascript:;" title="">Donec quam felis</a>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                            <td class="valign-middle">
+                                <p>{{this.question_title}}</p>
                             </td>
 
-                            <td class="valign-middle">Feb 12, 2012. 12:28</td>
+                            <td class="valign-middle">{{dateAgo this.created_at}}</td>
 
                             <td class="file-info valign-middle">
-                                <span><strong class="semibold">Size:</strong> 215 Kb</span> <br />
-                                <span><strong class="semibold">Format:</strong> .jpg</span> <br />
-                                <span><strong class="semibold">Dimensions:</strong> 120 x 120</span>
+                                <span><strong class="semibold"><i class="fa fa-eye"></i> </strong> {{this.views_count}}</span>
+                                <br>
+                                <span><strong class="semibold"><i class="fa fa-smile-o"></i> </strong> {{this.vote_yes_count}}</span>
+                                <br>
+                                <span><strong class="semibold"><i class="fa fa-frown-o"></i> </strong> {{this.vote_no_count}}</span>
                             </td>
 
                             <td class="text-center valign-middle">
-                                <button class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></button>
-                                &nbsp;
-                                <button class="btn btn-xs btn-secondary"><i class="fa fa-times"></i></button>
+                                <a href="/q/{{this.question_identifier}}" class="btn btn-xs btn-danger"><i class="fa fa-eye"></i></a>
+                                <a class="btn btn-xs btn-secondary"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
+                        {{/each}}
                         </tbody>
                     </table>
 
