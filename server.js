@@ -61,6 +61,7 @@ app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
+app.get('/api/questions/user/:user_id/:page', api_routes.getPaginatedQuestions);
 
 //Redirect no 200 status to /
 app.use(function (req, res, next) {

@@ -42,6 +42,25 @@ module.exports = {
             }
         }, {populate: ['question', 'user'], sortBy: {created_at: -1}});
 
+    },
+
+    getPaginatedQuestions: function(req, res) {
+
+        var page = req.params.page;
+        var user_id = req.params.user_id;
+
+        model.ModelContainer.QuestionModel.paginate({user: user_id}, page, 10, function (error, pageCount, paginatedResults, itemCount) {
+            if (error) {
+                console.error(error);
+                res.json(error);
+            } else {
+                console.log('Pages:', pageCount);
+                console.log(paginatedResults);
+
+                res.json(paginatedResults);
+            }
+        }, {populate: ['question', 'user'], sortBy: {created_at: -1}});
+
     }
 
 };
