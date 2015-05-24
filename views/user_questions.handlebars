@@ -18,7 +18,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">No, don't delete it</button>
-                <button type="button" class="btn btn-primary">Yes, delete it</button>
+                <button type="button" class="btn btn-primary" onclick="deleteQuestion(); return false;">Yes, delete it</button>
             </div> <!-- /.modal-footer -->
 
         </div> <!-- /.modal-content -->
@@ -83,7 +83,7 @@
 
                             <td class="text-center valign-middle">
                                 <a href="/q/{{this.question_identifier}}" class="btn btn-xs btn-danger"><i class="fa fa-eye"></i></a>
-                                <a class="btn btn-xs btn-secondary" data-toggle="modal" href="#basicModal"><i class="fa fa-times"></i></a>
+                                <a class="btn btn-xs btn-secondary" data-toggle="modal" href="#" onclick="openModalDeleteQuestion('{{this._id}}'); return false;"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                         {{/each}}

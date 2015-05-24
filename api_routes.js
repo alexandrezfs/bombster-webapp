@@ -61,6 +61,21 @@ module.exports = {
             }
         }, {populate: ['question', 'user'], sortBy: {created_at: -1}});
 
+    },
+
+    deleteQuestion: function(req, res) {
+
+        var question_id = req.params.question_id;
+
+        model.ModelContainer.QuestionModel.findOne({_id: question_id}, function(err, q) {
+
+            q.is_deleted = true;
+
+            q.save(function(err, qSaved) {
+                res.json(qSaved);
+            });
+
+        });
     }
 
 };

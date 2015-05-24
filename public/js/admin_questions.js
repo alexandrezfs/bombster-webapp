@@ -1,5 +1,6 @@
 var loadPage = 2;
 var stop_load_questions = false;
+var question_to_delete_id;
 
 $('document').ready(function() {
 
@@ -77,4 +78,21 @@ function questionItemToHtml(qItem) {
     var html = '<tr><td class="valign-middle">' + col1Content + '</td><td class="valign-middle">' + col2Content + '</td><td class="valign-middle">' + col3Content + '</td><td class="file-info valign-middle">' + col4Content + '</td><td class="text-center valign-middle">' + col5Content + '</td></tr>';
 
     return html;
+}
+
+function openModalDeleteQuestion(question_id) {
+
+    question_to_delete_id = question_id;
+
+    $("#basicModal").modal();
+}
+
+function deleteQuestion() {
+
+    $.get('/api/question/delete/' + question_to_delete_id, function(data) {
+
+        console.log(data);
+
+        document.location.href = "";
+    });
 }
