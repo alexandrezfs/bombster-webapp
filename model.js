@@ -84,6 +84,8 @@ var NotificationSchema = new Schema({
 
 TimelineSchema.plugin(mongoosePaginate);
 QuestionSchema.plugin(mongoosePaginate);
+NotificationSchema.plugin(mongoosePaginate);
+UserSchema.plugin(mongoosePaginate);
 
 exports.ModelContainer = {
     UserModel: mongoose.model('User', UserSchema),

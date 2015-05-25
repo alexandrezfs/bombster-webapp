@@ -11,6 +11,7 @@ var uploader = require('./upload');
 var vote_utils = require('./vote');
 var url = require('./url');
 var mongoosePaginate = require('mongoose-paginate');
+var notifications = require('./notifications');
 
 module.exports = {
 
@@ -59,7 +60,20 @@ module.exports = {
 
                 res.json(paginatedResults);
             }
-        }, {populate: ['question', 'user'], sortBy: {created_at: -1}});
+        }, {populate: ['user'], sortBy: {created_at: -1}});
+
+    },
+
+    getPaginatedNotifications: function(req, res) {
+
+        var page = req.params.page;
+        var user_id = req.params.user_id;
+
+        notifications.getNotificationsByPageAndUser(user_id, page, function(paginatedResults) {
+
+            res.json(paginatedResults);
+
+        });
 
     },
 

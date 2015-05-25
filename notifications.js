@@ -30,3 +30,19 @@ exports.getUserNotificationsAndCount = function(user, callback) {
     }
 
 };
+
+exports.getNotificationsByPageAndUser = function(user_id, page, callback) {
+
+    model.ModelContainer.NotificationModel.paginate({user: user_id}, page, 10, function (error, pageCount, paginatedResults, itemCount) {
+        if (error) {
+            console.error(error);
+            res.json(error);
+        } else {
+            console.log('Pages:', pageCount);
+            console.log(paginatedResults);
+
+            callback(paginatedResults);
+        }
+    }, {populate: ['user'], sortBy: {created_at: -1}});
+
+};

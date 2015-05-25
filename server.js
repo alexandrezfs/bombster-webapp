@@ -16,7 +16,8 @@ var express = require('express'),
     handlebars_helper = require('./handlebars_helper'),
     gravatar = require('gravatar'),
     model = require('./model'),
-    notifications = require('./notifications');
+    notifications = require('./notifications'),
+    fail = require('./fail');
 
 // Create an express instance and set a port variable
 var app = express();
@@ -58,40 +59,16 @@ app.get('/q/:question_identifier', routes.question);
 app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
+app.get('/dashboard/notifications', auth.authMiddleware, routes.notifications);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
 app.get('/api/questions/user/:user_id/:page', api_routes.getPaginatedQuestions);
+app.get('/api/notifications/user/:user_id/:page', api_routes.getPaginatedNotifications);
 app.get('/api/question/delete/:question_id', api_routes.deleteQuestion);
 
 //Redirect no 200 status to /
-app.use(function (req, res, next) {
-    if (res.status != 200) {
-
-        var username = req.session.username;
-
-        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
-
-            var email = null;
-            if (user) {
-                email = user.email;
-            }
-
-            notifications.getUserNotificationsAndCount(user, function (response) {
-
-                var gravatar_url = gravatar.url(email, {s: '400'});
-
-                res.render('404', {
-                    layout: 'admin', gravatar_url: gravatar_url, user: user,
-                    notifications: response.notifications,
-                    noread_notifications_count: response.noread_notifications_count
-                });
-
-            });
-        });
-
-    }
-});
+app.use(fail.routeFailed);
 
 // Fire it up (start our server)
 http.createServer(app).listen(port, function () {

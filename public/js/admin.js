@@ -12,7 +12,7 @@ $('document').ready(function() {
                 console.log('Scrolled to waypoint!');
 
                 if(!stop_load_timeline) {
-                    loadNextPage(loadPage);
+                    loadNextTimelinePage(loadPage);
                 }
             }
         });
@@ -45,7 +45,7 @@ $('document').ready(function() {
     }
 });
 
-function loadNextPage(page) {
+function loadNextTimelinePage(page) {
 
     console.log(page);
 

@@ -12,7 +12,7 @@ $('document').ready(function() {
                 console.log('Scrolled to waypoint!');
 
                 if(!stop_load_questions) {
-                    loadNextPage(loadPage);
+                    loadNextQuestionsPage(loadPage);
                 }
             }
         });
@@ -20,7 +20,7 @@ $('document').ready(function() {
     }
 });
 
-function loadNextPage(page) {
+function loadNextQuestionsPage(page) {
 
     console.log(page);
 
@@ -84,7 +84,7 @@ function openModalDeleteQuestion(question_id) {
 
     question_to_delete_id = question_id;
 
-    $("#basicModal").modal();
+    $("#deleteQuestionModal").modal();
 }
 
 function deleteQuestion() {

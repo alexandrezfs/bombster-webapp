@@ -1,0 +1,37 @@
+<input type="hidden" id="user_id" value="{{user._id}}">
+
+<div id="notifications-container" class="content">
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <h2 class="">Your Notifications</h2>
+
+                <br><br>
+
+                <ul class="icons-list notifications-list">
+                    {{#each allNotifications}}
+                    <li>
+                        {{#if_eq this.type 'question-first-vote'}}
+                            <i class="icon-li fa fa-trophy text-danger"></i>
+                        {{/if_eq}}
+                        {{dateAgo this.created_at}} - <a href="{{this.url}}">{{this.content}}</a>
+                    </li>
+                    {{/each}}
+                </ul>
+
+
+                <div id="notifications-loader-container">
+                    <img src="/img/loader.gif" class="loader" id="notifications-loader">
+                </div>
+
+            </div> <!-- /.col -->
+
+        </div> <!-- /.row -->
+
+    </div> <!-- /.container -->
+
+</div> <!-- .content -->
