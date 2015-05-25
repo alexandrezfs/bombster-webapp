@@ -60,6 +60,7 @@ app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
 app.get('/dashboard/notifications', auth.authMiddleware, routes.notifications);
+app.get('/dashboard/settings', auth.authMiddleware, routes.settings);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);

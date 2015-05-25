@@ -1,0 +1,283 @@
+<div class="content">
+
+    <div class="container">
+
+        <div class="layout layout-main-right layout-stack-sm">
+
+            <div class="col-md-3 col-sm-4 layout-sidebar">
+
+                <div class="nav-layout-sidebar-skip">
+                    <strong>Tab Navigation</strong> / <a href="#settings-content">Skip to Content</a>
+                </div>
+
+                <ul id="myTab" class="nav nav-layout-sidebar nav-stacked">
+                    <li class="active">
+                        <a href="#profile-tab" data-toggle="tab">
+                            <i class="fa fa-user"></i>
+                            &nbsp;&nbsp;Profile Settings
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#password-tab" data-toggle="tab">
+                            <i class="fa fa-lock"></i>
+                            &nbsp;&nbsp;Change Password
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#messaging" data-toggle="tab">
+                            <i class="fa fa-bullhorn"></i>
+                            &nbsp;&nbsp;Notifications
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- /.col -->
+
+
+            <div class="col-md-9 col-sm-8 layout-main">
+
+                <div id="settings-content" class="tab-content stacked-content">
+
+                    <div class="tab-pane fade in active" id="profile-tab">
+
+                        <div class="heading-block">
+                            <h3>
+                                Edit Profile
+                            </h3>
+                        </div>
+                        <!-- /.heading-block -->
+
+                        <p>You can change your profile informations here.</p>
+
+                        <br><br>
+
+                        <form action="/profile/update" method="POST" class="form-horizontal">
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Avatar</label>
+
+                                <div class="col-md-7">
+
+                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                        <div class="fileinput-preview thumbnail" data-trigger="fileinput"
+                                             style="max-width: 125px; max-height: 125px;">
+                                            <img src="{{gravatar_url}}" alt="Avatar">
+                                        </div>
+                                        <div>
+                                            <a href="http://gravatar.com" class="btn btn-success fileinput-exists"
+                                               data-dismiss="fileinput" target="_blank"><i class="fa fa-retweet"></i> Change on Gravatar</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.fileupload -->
+
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Username</label>
+
+                                <div class="col-md-7">
+                                    <input type="text" name="user-name" value="{{user.username}}" class="form-control"
+                                           disabled/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Email Address</label>
+
+                                <div class="col-md-7">
+                                    <input type="text" name="email-address" value="{{user.email}}"
+                                           class="form-control"/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+                            <div class="form-group">
+                                <div class="col-md-7 col-md-push-3">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    &nbsp;
+                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                            <!-- /.form-group -->
+
+                        </form>
+
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+
+                    <div class="tab-pane fade" id="password-tab">
+
+                        <div class="heading-block">
+                            <h3>
+                                Change Password
+                            </h3>
+                        </div>
+                        <!-- /.heading-block -->
+
+                        <p>You can update your password here. We will notify you once it's done.</p>
+
+                        <br><br>
+
+                        <form action="/password/update" method="POST" class="form-horizontal">
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Old Password</label>
+
+                                <div class="col-md-7">
+                                    <input type="password" name="old-password" class="form-control"/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <hr>
+
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">New Password</label>
+
+                                <div class="col-md-7">
+                                    <input type="password" name="new-password-1" class="form-control"/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">New Password Confirm</label>
+
+                                <div class="col-md-7">
+                                    <input type="password" name="new-password-2" class="form-control"/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <div class="form-group">
+
+                                <div class="col-md-7 col-md-push-3">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    &nbsp;
+                                    <button type="reset" class="btn btn-default">Cancel</button>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+                        </form>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+
+                    <div class="tab-pane fade" id="messaging">
+
+                        <div class="heading-block">
+                            <h3>
+                                Notification Settings
+                            </h3>
+                        </div>
+                        <!-- /.heading-block -->
+
+                        <p>We notify you by email by default. If you wish to don't get notifications by email, please un-check this checkbox.</p>
+
+                        <br><br>
+
+                        <form action="/notifications/toggle" action="POST" class="form form-horizontal">
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Toggle Notifications</label>
+
+                                <div class="col-md-7">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            <input value="" type="checkbox" checked>
+                                            Send system emails
+                                        </label>
+                                    </div>
+                                    <!-- /.checkbox -->
+
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Email for Notifications</label>
+
+                                <div class="col-md-7">
+                                    <select name="email_notifications" class="form-control" disabled>
+                                        <option value="1">{{user.email}}</option>
+                                    </select>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+
+                            <div class="form-group">
+
+                                <div class="col-md-7 col-md-push-3">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+                        </form>
+
+                    </div>
+                    <!-- /.tab-pane -->
+
+                </div>
+                <!-- /.tab-content -->
+
+            </div>
+            <!-- /.col -->
+
+        </div>
+        <!-- /.row -->
+
+
+    </div>
+    <!-- /.container -->
+
+</div> <!-- .content -->
+

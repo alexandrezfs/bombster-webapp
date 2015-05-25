@@ -509,5 +509,27 @@ module.exports = {
 
             });
         });
+    },
+
+    settings: function(req, res) {
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+            notifications.getUserNotificationsAndCount(user, function (response) {
+
+                res.render('settings', {
+                    user: user,
+                    layout: 'admin',
+                    gravatar_url: gravatar_url,
+                    notifications: response.notifications,
+                    noread_notifications_count: response.noread_notifications_count
+                });
+
+            });
+        });
     }
 };
