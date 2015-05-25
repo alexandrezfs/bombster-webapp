@@ -42,6 +42,14 @@
 
                 <div id="settings-content" class="tab-content stacked-content">
 
+                    {{#if errors}}
+                        <div class="alert alert-danger" role="alert">
+                            {{#each errors}}
+                                {{this}}<br>
+                            {{/each}}
+                        </div>
+                    {{/if}}
+
                     <div class="tab-pane fade in active" id="profile-tab">
 
                         <div class="heading-block">
@@ -111,8 +119,6 @@
                             <div class="form-group">
                                 <div class="col-md-7 col-md-push-3">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    &nbsp;
-                                    <button type="reset" class="btn btn-default">Cancel</button>
                                 </div>
                                 <!-- /.col -->
                             </div>
@@ -145,7 +151,7 @@
                                 <label class="col-md-3 control-label">Old Password</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="old-password" class="form-control"/>
+                                    <input type="password" name="oldPassword" class="form-control"/>
                                 </div>
                                 <!-- /.col -->
 
@@ -161,7 +167,7 @@
                                 <label class="col-md-3 control-label">New Password</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="new-password-1" class="form-control"/>
+                                    <input type="password" name="password" class="form-control"/>
                                 </div>
                                 <!-- /.col -->
 
@@ -174,7 +180,7 @@
                                 <label class="col-md-3 control-label">New Password Confirm</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="new-password-2" class="form-control"/>
+                                    <input type="password" name="passwordC" class="form-control"/>
                                 </div>
                                 <!-- /.col -->
 
@@ -186,8 +192,6 @@
 
                                 <div class="col-md-7 col-md-push-3">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    &nbsp;
-                                    <button type="reset" class="btn btn-default">Cancel</button>
                                 </div>
                                 <!-- /.col -->
 

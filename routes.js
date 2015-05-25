@@ -211,7 +211,7 @@ module.exports = {
         model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
 
             if (user) {
-                res.render('password_reset', {user: user, layout: 'landing'});
+                res.render('password_reset', {user: user, token: token, layout: 'landing'});
             }
             else {
                 res.redirect('/');
@@ -484,7 +484,7 @@ module.exports = {
         });
     },
 
-    notifications: function(req, res) {
+    notifications: function (req, res) {
 
         var username = req.session.username;
 
@@ -494,7 +494,7 @@ module.exports = {
 
             notifications.getUserNotificationsAndCount(user, function (response) {
 
-                notifications.getNotificationsByPageAndUser(user._id, 1, function(allNotifications) {
+                notifications.getNotificationsByPageAndUser(user._id, 1, function (allNotifications) {
 
                     res.render('dashboard_notifications', {
                         user: user,
@@ -511,7 +511,7 @@ module.exports = {
         });
     },
 
-    settings: function(req, res) {
+    settings: function (req, res) {
 
         var username = req.session.username;
 
@@ -531,5 +531,60 @@ module.exports = {
 
             });
         });
+    },
+
+    passwordUpdate: function (req, res) {
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            if(user) {
+
+                console.log('pass');
+
+                var formValues = req.body;
+                formValues.user = user;
+
+                formValidator.FormValidator.validateUpdatePassword(formValues, function(errors) {
+
+                    if(errors.length === 0) {
+
+                        //no error found, update password
+
+                        bcrypt.hash(formValues.password, 10, function (err, hash) {
+
+                            user.password = hash;
+
+                            user.save(function(err, u) {
+
+                                res.render('settings', {layout: 'admin'});
+
+                                //Send a mail
+                                email_interface.sendMailWithTemplate(
+                                    "",
+                                    "",
+                                    config.values.mandrill_templates['bombster-update-password-success'].name,
+                                    config.values.email_system_address,
+                                    "Bombster.io",
+                                    u.email,
+                                    config.values.mandrill_templates['bombster-update-password-success'].slug,
+                                    [{name: "USERNAME", content: u.username}],
+                                    function (response) {
+                                        console.log(response);
+                                    });
+
+                            });
+                        });
+                    }
+                    else {
+                        res.render('settings', {layout: 'admin', errors: errors});
+                    }
+
+                });
+            }
+
+        });
+
     }
 };
