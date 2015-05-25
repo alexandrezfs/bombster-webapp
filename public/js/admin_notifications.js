@@ -3,6 +3,8 @@ var stop_load_notification = false;
 
 $('document').ready(function() {
 
+    console.log('test');
+
     if($('#notifications-container').length > 0) {
 
         $(window).scroll(function(){
@@ -38,7 +40,7 @@ function loadNextNotificationsPage(page) {
         else {
 
             $('#notifications-loader').hide();
-            $('#notifications-table').append(notificationToHtml(data));
+            $('#notifications-container').append(notificationToHtml(data));
 
             loadPage++;
         }

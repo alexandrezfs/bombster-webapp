@@ -1,6 +1,6 @@
 <input type="hidden" id="user_id" value="{{user._id}}">
 
-<div id="notifications-container" class="content">
+<div class="content">
 
     <div class="container">
 
@@ -12,7 +12,7 @@
 
                 <br><br>
 
-                <ul class="icons-list notifications-list">
+                <ul id="notifications-container" class="icons-list notifications-list">
                     {{#each allNotifications}}
                     <li>
                         {{#if_eq this.type 'question-first-vote'}}
