@@ -539,51 +539,128 @@ module.exports = {
 
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            if(user) {
+            if (user) {
 
-                console.log('pass');
+                notifications.getUserNotificationsAndCount(user, function (response) {
 
-                var formValues = req.body;
-                formValues.user = user;
+                    var formValues = req.body;
+                    formValues.user = user;
 
-                formValidator.FormValidator.validateUpdatePassword(formValues, function(errors) {
+                    var gravatar_url = gravatar.url(user.email, {s: '400'});
 
-                    if(errors.length === 0) {
+                    formValidator.FormValidator.validateUpdatePassword(formValues, function (errors) {
 
-                        //no error found, update password
+                        if (errors.length === 0) {
 
-                        bcrypt.hash(formValues.password, 10, function (err, hash) {
+                            //no error found, update password
 
-                            user.password = hash;
+                            bcrypt.hash(formValues.password, 10, function (err, hash) {
 
-                            user.save(function(err, u) {
+                                user.password = hash;
 
-                                res.render('settings', {layout: 'admin'});
+                                user.save(function (err, u) {
 
-                                //Send a mail
-                                email_interface.sendMailWithTemplate(
-                                    "",
-                                    "",
-                                    config.values.mandrill_templates['bombster-update-password-success'].name,
-                                    config.values.email_system_address,
-                                    "Bombster.io",
-                                    u.email,
-                                    config.values.mandrill_templates['bombster-update-password-success'].slug,
-                                    [{name: "USERNAME", content: u.username}],
-                                    function (response) {
-                                        console.log(response);
-                                    });
+                                    res.redirect('/dashboard/settings');
+
+                                    //Send a mail
+                                    email_interface.sendMailWithTemplate(
+                                        "",
+                                        "",
+                                        config.values.mandrill_templates['bombster-update-password-success'].name,
+                                        config.values.email_system_address,
+                                        "Bombster.io",
+                                        u.email,
+                                        config.values.mandrill_templates['bombster-update-password-success'].slug,
+                                        [{name: "USERNAME", content: u.username}],
+                                        function (response) {
+                                            console.log(response);
+                                        });
+
+                                });
 
                             });
-                        });
-                    }
-                    else {
-                        res.render('settings', {layout: 'admin', errors: errors});
-                    }
+                        }
+                        else {
+                            res.render('settings', {
+                                layout: 'admin',
+                                errors: errors,
+                                gravatar_url: gravatar_url,
+                                notifications: response.notifications,
+                                user: user
+                            });
+                        }
+
+                    });
+
 
                 });
             }
 
+        });
+
+    },
+
+    toggleNotification: function (req, res) {
+
+        var username = req.session.username;
+
+        var send_system_notifications = req.body.send_system_notifications;
+
+        console.log(send_system_notifications);
+
+        var value = send_system_notifications ? true : false;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            user.send_system_notifications = value;
+            user.save(function (err, u) {
+                res.redirect('/dashboard/settings');
+            });
+
+        });
+    },
+
+    profileUpdate: function (req, res) {
+
+        var username = req.session.username;
+
+        var formValues = req.body;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            if (user) {
+
+                notifications.getUserNotificationsAndCount(user, function (response) {
+
+                    var formValues = req.body;
+                    formValues.user = user;
+
+                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                    formValidator.FormValidator.validateUpdateProfile(formValues, function (errors) {
+
+                        if(errors.length > 0) {
+
+                            res.render('settings', {
+                                layout: 'admin',
+                                errors: errors,
+                                gravatar_url: gravatar_url,
+                                notifications: response.notifications,
+                                user: user
+                            });
+
+                        }
+                        else {
+                            user.email = formValues.email;
+                            user.save(function(err, u) {
+                                res.redirect('/dashboard/settings');
+                            });
+                        }
+
+                    });
+
+                });
+            }
         });
 
     }

@@ -108,8 +108,19 @@
                                 <label class="col-md-3 control-label">Email Address</label>
 
                                 <div class="col-md-7">
-                                    <input type="text" name="email-address" value="{{user.email}}"
-                                           class="form-control"/>
+                                    <input type="email" name="email" value="{{user.email}}" class="form-control" required/>
+                                </div>
+                                <!-- /.col -->
+
+                            </div>
+                            <!-- /.form-group -->
+
+                            <div class="form-group">
+
+                                <label class="col-md-3 control-label">Current password</label>
+
+                                <div class="col-md-7">
+                                    <input type="password" name="password" class="form-control" required/>
                                 </div>
                                 <!-- /.col -->
 
@@ -151,7 +162,7 @@
                                 <label class="col-md-3 control-label">Old Password</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="oldPassword" class="form-control"/>
+                                    <input type="password" name="oldPassword" class="form-control" required/>
                                 </div>
                                 <!-- /.col -->
 
@@ -167,7 +178,7 @@
                                 <label class="col-md-3 control-label">New Password</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="password" class="form-control"/>
+                                    <input type="password" name="password" class="form-control" required/>
                                 </div>
                                 <!-- /.col -->
 
@@ -180,7 +191,7 @@
                                 <label class="col-md-3 control-label">New Password Confirm</label>
 
                                 <div class="col-md-7">
-                                    <input type="password" name="passwordC" class="form-control"/>
+                                    <input type="password" name="passwordC" class="form-control" required/>
                                 </div>
                                 <!-- /.col -->
 
@@ -217,7 +228,7 @@
 
                         <br><br>
 
-                        <form action="/notifications/toggle" action="POST" class="form form-horizontal">
+                        <form action="/notifications/toggle" method="POST" class="form form-horizontal">
 
                             <div class="form-group">
 
@@ -227,7 +238,7 @@
 
                                     <div class="checkbox">
                                         <label>
-                                            <input value="" type="checkbox" checked>
+                                            <input type="checkbox" name="send_system_notifications" {{#if user.send_system_notifications}}checked{{/if}}>
                                             Send system emails
                                         </label>
                                     </div>

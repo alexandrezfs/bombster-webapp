@@ -14,9 +14,7 @@ var express = require('express'),
     auth = require('./auth'),
     moment = require('moment'),
     handlebars_helper = require('./handlebars_helper'),
-    gravatar = require('gravatar'),
     model = require('./model'),
-    notifications = require('./notifications'),
     fail = require('./fail');
 
 // Create an express instance and set a port variable
@@ -61,7 +59,9 @@ app.post('/upload', routes.upload);
 app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
 app.get('/dashboard/notifications', auth.authMiddleware, routes.notifications);
 app.get('/dashboard/settings', auth.authMiddleware, routes.settings);
-app.post('/password/update', routes.passwordUpdate);
+app.post('/notifications/toggle', auth.authMiddleware, routes.toggleNotification);
+app.post('/password/update', auth.authMiddleware, routes.passwordUpdate);
+app.post('/profile/update', auth.authMiddleware, routes.profileUpdate);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);

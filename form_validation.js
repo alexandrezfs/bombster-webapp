@@ -91,6 +91,34 @@ exports.FormValidator = {
 
         });
 
+    },
+
+    validateUpdateProfile: function(formValues, callback) {
+
+        var errors = [];
+
+        if (formValues.password.length === 0) {
+            errors.push('Password is missing.');
+        }
+
+        bcrypt.compare(formValues.password, formValues.user.password, function (err, result) {
+
+            if (result !== true) {
+                errors.push('Your password is not correct.');
+            }
+
+            model.ModelContainer.UserModel.findOne({email: formValues.email}, function(err, u) {
+
+                if(u) {
+                    errors.push('This email address is already registered in our database.');
+                }
+
+                callback(errors);
+
+            });
+
+        });
+
     }
 
 };

@@ -27,6 +27,7 @@ var UserSchema = new Schema({
     vote_no_count: {type: Number, default: 0},
     reshare_count: {type: Number, default: 0},
     is_deleted: {type: Boolean, default: false},
+    send_system_notifications: {type: Boolean, default: true},
     last_login: {type: Date, default: Date.now},
     created_at: {type: Date, default: Date.now},
     updated_at: {type: Date, default: Date.now}
