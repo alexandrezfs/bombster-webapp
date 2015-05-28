@@ -24,6 +24,7 @@ handlebars.registerHelper(layouts(handlebars));
 
 handlebars.registerHelper("dateAgo", handlebars_helper.dateAgo);
 handlebars.registerHelper("if_eq", handlebars_helper.if_eq);
+handlebars.registerHelper("if_no_eq", handlebars_helper.if_no_eq);
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -62,12 +63,14 @@ app.get('/dashboard/settings', auth.authMiddleware, routes.settings);
 app.post('/notifications/toggle', auth.authMiddleware, routes.toggleNotification);
 app.post('/password/update', auth.authMiddleware, routes.passwordUpdate);
 app.post('/profile/update', auth.authMiddleware, routes.profileUpdate);
+app.get('/logout', auth.authMiddleware, routes.logout);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
 app.get('/api/questions/user/:user_id/:page', api_routes.getPaginatedQuestions);
 app.get('/api/notifications/user/:user_id/:page', api_routes.getPaginatedNotifications);
 app.get('/api/question/delete/:question_id', api_routes.deleteQuestion);
+app.post('/api/notifications/markasread', api_routes.markAsReadNotifications);
 
 
 //Redirect no 200 status to /

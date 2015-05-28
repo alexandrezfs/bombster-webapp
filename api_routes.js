@@ -90,6 +90,21 @@ module.exports = {
             });
 
         });
+    },
+
+    markAsReadNotifications: function(req, res) {
+
+        var user_id = req.body.user_id;
+
+        model.ModelContainer.NotificationModel.find({user: user_id, read: false}, function(err, notifs) {
+
+            notifs.forEach(function(n) {
+                n.read = true;
+                n.save();
+            });
+
+            res.json({message: 'success'});
+        });
     }
 
 };

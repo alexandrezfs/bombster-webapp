@@ -72,8 +72,19 @@ module.exports = {
                                 console.log(response);
                             });
 
-                        res.redirect('/dashboard');
+                        var notification = {
+                            user: u._id,
+                            type: "signup",
+                            title: "Welcome on Bombster !",
+                            content: "Congrats ! You successfully signed up. You can start asking questions by now !",
+                            url: "/dashboard"
+                        };
 
+                        model.ModelContainer.NotificationModel(notification).save(function(err, n) {
+
+                            res.redirect('/dashboard');
+
+                        });
                     });
                 });
 
@@ -111,6 +122,13 @@ module.exports = {
             res.render('login', {layout: 'account'});
         }
 
+    },
+
+    logout: function(req, res) {
+
+        req.session.destroy();
+
+        res.redirect('/');
     },
 
     loginProcess: function (req, res) {

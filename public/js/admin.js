@@ -129,3 +129,12 @@ function deleteImage() {
     initDropzone();
 
 }
+
+function markAllNotificationsAsRead(user_id) {
+
+    $('#notifications_counter').hide();
+
+    $.post('/api/notifications/markasread', {user_id: user_id}, function(response) {
+
+    });
+}

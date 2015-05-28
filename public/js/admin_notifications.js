@@ -67,6 +67,9 @@ function notificationItemToHtml(nItem) {
     if(nItem.type == 'question-first-vote') {
         icon = '<i class="icon-li fa fa-trophy text-danger"></i>';
     }
+    if(nItem.type == 'question-first-vote') {
+        icon = '<i class="icon-li fa fa-star text-danger"></i>';
+    }
 
     var html = '<li>' + icon + ' ' + moment(nItem.created_at).fromNow() + ' - <a href="' + nItem.url + '">' + nItem.content + '</a></li>';
 

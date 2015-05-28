@@ -18,6 +18,9 @@
                         {{#if_eq this.type 'question-first-vote'}}
                             <i class="icon-li fa fa-trophy text-danger"></i>
                         {{/if_eq}}
+                        {{#if_eq this.type 'signup'}}
+                            <i class="icon-li fa fa-star text-danger"></i>
+                        {{/if_eq}}
                         {{dateAgo this.created_at}} - <a href="{{this.url}}">{{this.content}}</a>
                     </li>
                     {{/each}}

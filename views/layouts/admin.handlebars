@@ -29,8 +29,6 @@
     <!-- App CSS -->
     <link rel="stylesheet" href="/css/mvpready-admin.css">
     <link rel="stylesheet" href="/css/style.css">
-    <!-- <link rel="stylesheet" href="./css/custom.css"> -->
-
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="/img/favicon.ico">
@@ -70,10 +68,10 @@
 
                     <li class="dropdown navbar-notification">
 
-                        <a href="./page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" onclick="markAllNotificationsAsRead('{{user._id}}'); return false;" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell navbar-notification-icon"></i>
                             <span class="visible-xs-inline">&nbsp;Notifications</span>
-                            <b class="badge badge-primary">{{noread_notifications_count}}</b>
+                            {{#if_no_eq noread_notifications_count 0}} <b id="notifications_counter" class="badge badge-primary">{{noread_notifications_count}}</b> {{/if_no_eq}}
                         </a>
 
                         <div class="dropdown-menu">
@@ -88,6 +86,9 @@
                                         <span class="notification-icon">
                                             {{#if_eq this.type 'question-first-vote'}}
                                                 <i class="text-primary fa fa-trophy"></i>
+                                            {{/if_eq}}
+                                            {{#if_eq this.type 'signup'}}
+                                                <i class="text-primary fa fa-star"></i>
                                             {{/if_eq}}
                                         </span>
                                         <span class="notification-title">{{this.title}}</span>
