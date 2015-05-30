@@ -1,0 +1,69 @@
+
+<div class="content">
+
+    <div class="container">
+
+        <div class="layout layout-stack-sm layout-main-left">
+
+            <div class="col-sm-7 col-md-8 layout-main">
+
+                <div class="portlet portlet-default">
+
+                    <div class="portlet-header">
+                        <h4 class="portlet-title">
+                            Search Results
+                        </h4>
+                    </div> <!-- /.portlet-header -->
+
+                    <div class="portlet-body">
+
+                        {{#each questions}}
+
+                        <div class="search-item-container">
+
+                            <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
+                            <p>By <a href="/u/{{this.user.username}}">{{{this.user.username}}}</a> {{dateAgo this.created_at}}.<br>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}} said <strong>no</strong>.</p>
+
+                        </div>
+                        <!-- /.feed-item -->
+
+                        {{/each}}
+
+                    </div> <!-- /.portlet-body -->
+
+                </div> <!-- /.portlet -->
+
+            </div> <!-- /.layout-main -->
+
+
+
+            <div class="col-sm-5 col-md-4 layout-sidebar">
+
+                <div class="portlet">
+                    <a href="/dashboard" class="btn btn-primary btn-jumbo btn-block ">New Question</a>
+                    <br>
+                    <a href="/signup" class="btn btn-secondary btn-lg btn-block ">Sign Up</a>
+                </div> <!-- /.portlet -->
+
+
+                <h4>Trending Now</h4>
+
+                <div class="well">
+
+                    <ul class="icons-list text-md">
+                        <li>
+                            <i class="icon-li fa fa-comments-o text-primary"></i>
+                            <strong class="semibold">New Comment!</strong>
+                            <br>
+                            Curabitur cursus nisl et mauris imperdiet porttitor.
+                        </li>
+                    </ul>
+                </div> <!-- /.well -->
+
+            </div> <!-- /.layout-sidebar -->
+
+        </div> <!-- /.layout -->
+
+    </div> <!-- /.container -->
+
+</div> <!-- .content -->

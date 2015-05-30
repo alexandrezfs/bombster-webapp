@@ -11,6 +11,7 @@ var uploader = require('./upload');
 var vote_utils = require('./vote');
 var url = require('./url');
 var notifications = require('./notifications');
+var search = require('./search');
 
 module.exports = {
 
@@ -678,6 +679,38 @@ module.exports = {
                     });
 
                 });
+            }
+        });
+
+    },
+
+    search: function(req, res) {
+
+        var username = req.session.username;
+        var keyword = req.params.keyword;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            if (user) {
+
+                var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                search.searchForQuestion(keyword, function(questions) {
+
+                    notifications.getUserNotificationsAndCount(user, function (response) {
+
+                        res.render('search', {
+                            layout: 'admin',
+                            gravatar_url: gravatar_url,
+                            notifications: response.notifications,
+                            user: user,
+                            questions: questions
+                        });
+
+                    });
+
+                });
+
             }
         });
 

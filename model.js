@@ -85,6 +85,8 @@ var NotificationSchema = new Schema({
 
 TimelineSchema.plugin(mongoosePaginate);
 QuestionSchema.plugin(mongoosePaginate);
+QuestionSchema.index({ question_title: 'text' });
+
 NotificationSchema.plugin(mongoosePaginate);
 UserSchema.plugin(mongoosePaginate);
 

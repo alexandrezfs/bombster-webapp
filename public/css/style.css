@@ -54,3 +54,7 @@
 #notifications-loader {
     display: none;
 }
+
+.search-item-container {
+    border-bottom: 1px dotted #CCC;
+}
