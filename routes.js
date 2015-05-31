@@ -322,15 +322,23 @@ module.exports = {
 
                                     trending.getPopularTrends(5, function (trending_questions) {
 
-                                        res.render('dashboard', {
-                                            user: user,
-                                            timelineItems: timelineItems,
-                                            layout: 'admin',
-                                            gravatar_url: gravatar_url,
-                                            notifications: notifications,
-                                            noread_notifications_count: noread_notifications_count,
-                                            trending_questions: trending_questions
-                                        });
+                                        model.ModelContainer.QuestionModel.count({
+                                            user: user._id,
+                                            is_deleted: false
+                                        })
+                                            .exec(function (err, questions_count) {
+
+                                                res.render('dashboard', {
+                                                    user: user,
+                                                    timelineItems: timelineItems,
+                                                    layout: 'admin',
+                                                    gravatar_url: gravatar_url,
+                                                    notifications: notifications,
+                                                    noread_notifications_count: noread_notifications_count,
+                                                    trending_questions: trending_questions,
+                                                    questions_count: questions_count
+                                                });
+                                            });
 
                                     });
                                 });
@@ -339,6 +347,114 @@ module.exports = {
 
                 });
 
+        });
+
+    },
+
+    user: function (req, res) {
+
+        var username = req.session.username;
+        var other_user_username = req.params.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+            model.ModelContainer.UserModel.findOne({
+                username: other_user_username,
+                is_deleted: false
+            }, function (err, other_user) {
+
+                if (user) {
+
+                    model.ModelContainer.TimelineModel.find({
+                        user: other_user._id,
+                        is_deleted: false
+                    })
+                        .sort({created_at: -1})
+                        .limit(10)
+                        .populate('user')
+                        .populate('question')
+                        .exec(function (err, timelineItems) {
+
+                            model.ModelContainer.NotificationModel.find({user: user._id})
+                                .sort({created_at: -1})
+                                .limit(100)
+                                .exec(function (err, notifications) {
+
+                                    model.ModelContainer.NotificationModel.count({user: user._id, read: false})
+                                        .exec(function (err, noread_notifications_count) {
+
+                                            var gravatar_url = gravatar.url(user.email, {s: '400'});
+                                            var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
+
+                                            trending.getPopularTrends(5, function (trending_questions) {
+
+                                                model.ModelContainer.QuestionModel.count({
+                                                    user: other_user._id,
+                                                    is_deleted: false
+                                                })
+                                                    .exec(function (err, questions_count) {
+
+                                                        res.render('user', {
+                                                            user: user,
+                                                            other_user: other_user,
+                                                            timelineItems: timelineItems,
+                                                            layout: 'admin',
+                                                            gravatar_url: gravatar_url,
+                                                            notifications: notifications,
+                                                            noread_notifications_count: noread_notifications_count,
+                                                            trending_questions: trending_questions,
+                                                            other_user_gravatar_url: other_user_gravatar_url,
+                                                            questions_count: questions_count
+                                                        });
+
+                                                    });
+
+                                            });
+                                        });
+
+                                });
+
+                        });
+
+                }
+                else {
+
+                    model.ModelContainer.TimelineModel.find({
+                        user: other_user._id,
+                        is_deleted: false
+                    })
+                        .sort({created_at: -1})
+                        .limit(10)
+                        .populate('user')
+                        .populate('question')
+                        .exec(function (err, timelineItems) {
+
+                            var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
+
+                            trending.getPopularTrends(5, function (trending_questions) {
+
+                                model.ModelContainer.QuestionModel.count({
+                                    user: other_user._id,
+                                    is_deleted: false
+                                })
+                                    .exec(function (err, questions_count) {
+
+                                        res.render('user', {
+                                            other_user: other_user,
+                                            timelineItems: timelineItems,
+                                            layout: 'admin',
+                                            trending_questions: trending_questions,
+                                            other_user_gravatar_url: other_user_gravatar_url,
+                                            questions_count: questions_count
+                                        });
+                                    });
+
+                            });
+
+                        });
+
+                }
+
+            });
         });
 
     },

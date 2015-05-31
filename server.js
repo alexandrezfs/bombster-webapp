@@ -55,6 +55,7 @@ app.get('/password/reset-success', routes.passwordResetSuccess);
 app.get('/dashboard', auth.authMiddleware, routes.dashboard);
 app.post('/question/add', routes.addQuestion);
 app.get('/q/:question_identifier', routes.question);
+app.get('/u/:username', routes.user);
 app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);

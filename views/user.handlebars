@@ -1,5 +1,3 @@
-<input type="hidden" id="user_id" value="{{user._id}}">
-
 <div class="content">
 
     <div class="container">
@@ -9,20 +7,9 @@
             <div class="col-md-3 col-sm-5">
 
                 <div class="profile-avatar">
-                    <img src="{{gravatar_url}}" target="_blank" class="profile-avatar-img img-responsive thumbnail" alt="Profile Image">
+                    <img src="{{other_user_gravatar_url}}" target="_blank" class="profile-avatar-img img-responsive thumbnail" alt="Profile Image">
                 </div>
                 <!-- /.profile-avatar -->
-
-                <div class="list-group">
-
-                    <a href="http://gravatar.com" class="list-group-item">
-                        <i class="fa fa-camera text-primary"></i> &nbsp;&nbsp;Change my picture
-
-                        <i class="fa fa-chevron-right list-group-chevron"></i>
-                    </a>
-
-                </div>
-                <!-- /.list-group -->
 
             </div>
             <!-- /.col -->
@@ -32,31 +19,11 @@
 
                 <br class="visible-xs">
 
-                <h3>What's your question ?</h3>
+                <h3>{{other_user.username}}</h3>
 
-                <div class="share-widget clearfix">
+                <h5 class="text-muted">Signed up on bombster.io {{dateAgo other_user.created_at}}</h5>
 
-                    <textarea class="form-control share-widget-textarea" rows="3" id="question_title"
-                              placeholder="Do you think that we ever went to the moon ?" tabindex="1"></textarea>
-
-                    <div class="share-widget-actions">
-
-                        <div id="img-upload-container" class="share-widget-types pull-left">
-                            <a href="#" id="questionImageDropzone" class="fa fa-picture-o ui-tooltip"
-                               title="Post an Image"><i></i></a>
-                        </div>
-
-                        <div class="pull-right">
-                            <a class="btn btn-primary btn-sm" tabindex="2" id="question_submit">Post</a>
-                        </div>
-
-                    </div>
-                    <!-- /.share-widget-actions -->
-
-                </div>
-                <!-- /.share-widget -->
-
-                <br><br>
+                <hr>
 
                 <div id="timeline-container">
 
@@ -126,7 +93,7 @@
 
                 <div class="heading-block">
                     <h5>
-                        Your Stats
+                        {{other_user.username}}'s stats
                     </h5>
                 </div>
                 <!-- /.heading-block -->
@@ -142,17 +109,18 @@
 
                     <a href="#" class="list-group-item">
                         <h3 class="pull-right"><i class="fa fa-smile-o  text-primary"></i></h3>
-                        <h4 class="list-group-item-heading">{{user.vote_yes_count}}</h4>
+                        <h4 class="list-group-item-heading">{{other_user.vote_yes_count}}</h4>
 
-                        <p class="list-group-item-text">Total Yes Votes</p>
+                        <p class="list-group-item-text">Yes Votes</p>
                     </a>
 
                     <a href="#" class="list-group-item">
                         <h3 class="pull-right"><i class="fa fa-frown-o  text-primary"></i></h3>
-                        <h4 class="list-group-item-heading">{{user.vote_no_count}}</h4>
+                        <h4 class="list-group-item-heading">{{other_user.vote_no_count}}</h4>
 
-                        <p class="list-group-item-text">Total No Votes</p>
+                        <p class="list-group-item-text">No Votes</p>
                     </a>
+
                 </div>
                 <!-- /.list-group -->
 
