@@ -12,6 +12,7 @@ var vote_utils = require('./vote');
 var urlTools = require('./url');
 var notifications = require('./notifications');
 var search = require('./search');
+var trending = require('./trending');
 
 module.exports = {
 
@@ -81,7 +82,7 @@ module.exports = {
                             url: "/dashboard"
                         };
 
-                        model.ModelContainer.NotificationModel(notification).save(function(err, n) {
+                        model.ModelContainer.NotificationModel(notification).save(function (err, n) {
 
                             res.redirect('/dashboard');
 
@@ -125,7 +126,7 @@ module.exports = {
 
     },
 
-    logout: function(req, res) {
+    logout: function (req, res) {
 
         req.session.destroy();
 
@@ -319,16 +320,21 @@ module.exports = {
 
                                     var gravatar_url = gravatar.url(user.email, {s: '400'});
 
-                                    res.render('dashboard', {
-                                        user: user,
-                                        timelineItems: timelineItems,
-                                        layout: 'admin',
-                                        gravatar_url: gravatar_url,
-                                        notifications: notifications,
-                                        noread_notifications_count: noread_notifications_count
-                                    });
+                                    trending.getPopularTrends(5, function (trending_questions) {
 
+                                        res.render('dashboard', {
+                                            user: user,
+                                            timelineItems: timelineItems,
+                                            layout: 'admin',
+                                            gravatar_url: gravatar_url,
+                                            notifications: notifications,
+                                            noread_notifications_count: noread_notifications_count,
+                                            trending_questions: trending_questions
+                                        });
+
+                                    });
                                 });
+
                         });
 
                 });
@@ -658,7 +664,7 @@ module.exports = {
 
                     formValidator.FormValidator.validateUpdateProfile(formValues, function (errors) {
 
-                        if(errors.length > 0) {
+                        if (errors.length > 0) {
 
                             res.render('settings', {
                                 layout: 'admin',
@@ -671,7 +677,7 @@ module.exports = {
                         }
                         else {
                             user.email = formValues.email;
-                            user.save(function(err, u) {
+                            user.save(function (err, u) {
                                 res.redirect('/dashboard/settings');
                             });
                         }
@@ -684,35 +690,48 @@ module.exports = {
 
     },
 
-    search: function(req, res) {
+    search: function (req, res) {
 
         var username = req.session.username;
         var keyword = req.query.keyword;
 
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            if (user) {
+            search.searchForQuestion(keyword, function (questions) {
 
-                var gravatar_url = gravatar.url(user.email, {s: '400'});
+                trending.getPopularTrends(5, function (trending_questions) {
 
-                search.searchForQuestion(keyword, function(questions) {
+                    if (user) {
 
-                    notifications.getUserNotificationsAndCount(user, function (response) {
+                        var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                        notifications.getUserNotificationsAndCount(user, function (response) {
+
+                            res.render('search', {
+                                layout: 'admin',
+                                gravatar_url: gravatar_url,
+                                notifications: response.notifications,
+                                user: user,
+                                questions: questions,
+                                trending_questions: trending_questions
+                            });
+
+                        });
+                    }
+                    else {
 
                         res.render('search', {
                             layout: 'admin',
-                            gravatar_url: gravatar_url,
-                            notifications: response.notifications,
-                            user: user,
-                            questions: questions
+                            questions: questions,
+                            trending_questions: trending_questions
                         });
 
-                    });
+                    }
 
                 });
 
-            }
-        });
+            });
 
+        });
     }
 };
