@@ -362,30 +362,31 @@ module.exports = {
                 is_deleted: false
             }, function (err, other_user) {
 
-                if (user) {
+                model.ModelContainer.TimelineModel.find({
+                    user: other_user._id,
+                    is_deleted: false
+                })
+                    .sort({created_at: -1})
+                    .limit(10)
+                    .populate('user')
+                    .populate('question')
+                    .exec(function (err, timelineItems) {
 
-                    model.ModelContainer.TimelineModel.find({
-                        user: other_user._id,
-                        is_deleted: false
-                    })
-                        .sort({created_at: -1})
-                        .limit(10)
-                        .populate('user')
-                        .populate('question')
-                        .exec(function (err, timelineItems) {
+                        trending.getPopularTrends(5, function (trending_questions) {
 
-                            model.ModelContainer.NotificationModel.find({user: user._id})
-                                .sort({created_at: -1})
-                                .limit(100)
-                                .exec(function (err, notifications) {
+                            if (user) {
 
-                                    model.ModelContainer.NotificationModel.count({user: user._id, read: false})
-                                        .exec(function (err, noread_notifications_count) {
+                                model.ModelContainer.NotificationModel.find({user: user._id})
+                                    .sort({created_at: -1})
+                                    .limit(100)
+                                    .exec(function (err, notifications) {
 
-                                            var gravatar_url = gravatar.url(user.email, {s: '400'});
-                                            var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
+                                        model.ModelContainer.NotificationModel.count({user: user._id, read: false})
+                                            .exec(function (err, noread_notifications_count) {
 
-                                            trending.getPopularTrends(5, function (trending_questions) {
+                                                var gravatar_url = gravatar.url(user.email, {s: '400'});
+                                                var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
+
 
                                                 model.ModelContainer.QuestionModel.count({
                                                     user: other_user._id,
@@ -409,28 +410,13 @@ module.exports = {
                                                     });
 
                                             });
-                                        });
+                                    });
 
-                                });
 
-                        });
+                            }
+                            else {
 
-                }
-                else {
-
-                    model.ModelContainer.TimelineModel.find({
-                        user: other_user._id,
-                        is_deleted: false
-                    })
-                        .sort({created_at: -1})
-                        .limit(10)
-                        .populate('user')
-                        .populate('question')
-                        .exec(function (err, timelineItems) {
-
-                            var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
-
-                            trending.getPopularTrends(5, function (trending_questions) {
+                                var other_user_gravatar_url = gravatar.url(other_user.email, {s: '400'});
 
                                 model.ModelContainer.QuestionModel.count({
                                     user: other_user._id,
@@ -447,13 +433,9 @@ module.exports = {
                                             questions_count: questions_count
                                         });
                                     });
-
-                            });
-
+                            }
                         });
-
-                }
-
+                    });
             });
         });
 
