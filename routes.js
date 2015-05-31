@@ -9,7 +9,7 @@ var shortid = require('shortid');
 var gravatar = require('gravatar');
 var uploader = require('./upload');
 var vote_utils = require('./vote');
-var url = require('./url');
+var urlTools = require('./url');
 var notifications = require('./notifications');
 var search = require('./search');
 
@@ -402,7 +402,7 @@ module.exports = {
     question: function (req, res) {
 
         var question_identifier = req.params.question_identifier;
-        var fullUrl = url.currentUrl(req);
+        var fullUrl = urlTools.currentUrl(req);
 
         model.ModelContainer.QuestionModel.findOne({
             question_identifier: question_identifier,
@@ -687,7 +687,7 @@ module.exports = {
     search: function(req, res) {
 
         var username = req.session.username;
-        var keyword = req.params.keyword;
+        var keyword = req.query.keyword;
 
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 

@@ -1,4 +1,3 @@
-
 <div class="content">
 
     <div class="container">
@@ -13,28 +12,43 @@
                         <h4 class="portlet-title">
                             Search Results
                         </h4>
-                    </div> <!-- /.portlet-header -->
+                    </div>
+                    <!-- /.portlet-header -->
 
                     <div class="portlet-body">
 
-                        {{#each questions}}
+                        {{#if questions}}
 
-                        <div class="search-item-container">
+                            {{#each questions}}
 
-                            <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
-                            <p>By <a href="/u/{{this.user.username}}">{{{this.user.username}}}</a> {{dateAgo this.created_at}}.<br>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}} said <strong>no</strong>.</p>
+                                <div class="search-item-container">
 
-                        </div>
-                        <!-- /.feed-item -->
+                                    <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
 
-                        {{/each}}
+                                    <p>By <a
+                                            href="/u/{{this.user.username}}">{{{this.user.username}}}</a> {{dateAgo this.created_at}}
+                                        .<br>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}}
+                                        said <strong>no</strong>.</p>
 
-                    </div> <!-- /.portlet-body -->
+                                </div>
+                                <!-- /.feed-item -->
 
-                </div> <!-- /.portlet -->
+                            {{/each}}
 
-            </div> <!-- /.layout-main -->
+                            {{else}}
 
+                            <p>No results found.</p>
+
+                        {{/if}}
+
+                    </div>
+                    <!-- /.portlet-body -->
+
+                </div>
+                <!-- /.portlet -->
+
+            </div>
+            <!-- /.layout-main -->
 
 
             <div class="col-sm-5 col-md-4 layout-sidebar">
@@ -43,7 +57,8 @@
                     <a href="/dashboard" class="btn btn-primary btn-jumbo btn-block ">New Question</a>
                     <br>
                     <a href="/signup" class="btn btn-secondary btn-lg btn-block ">Sign Up</a>
-                </div> <!-- /.portlet -->
+                </div>
+                <!-- /.portlet -->
 
 
                 <h4>Trending Now</h4>
@@ -58,12 +73,16 @@
                             Curabitur cursus nisl et mauris imperdiet porttitor.
                         </li>
                     </ul>
-                </div> <!-- /.well -->
+                </div>
+                <!-- /.well -->
 
-            </div> <!-- /.layout-sidebar -->
+            </div>
+            <!-- /.layout-sidebar -->
 
-        </div> <!-- /.layout -->
+        </div>
+        <!-- /.layout -->
 
-    </div> <!-- /.container -->
+    </div>
+    <!-- /.container -->
 
 </div> <!-- .content -->

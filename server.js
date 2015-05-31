@@ -64,7 +64,7 @@ app.post('/notifications/toggle', auth.authMiddleware, routes.toggleNotification
 app.post('/password/update', auth.authMiddleware, routes.passwordUpdate);
 app.post('/profile/update', auth.authMiddleware, routes.profileUpdate);
 app.get('/logout', auth.authMiddleware, routes.logout);
-app.get('/search/:keyword', routes.search);
+app.get('/search', routes.search);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
