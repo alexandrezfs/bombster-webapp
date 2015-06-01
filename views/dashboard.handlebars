@@ -173,8 +173,7 @@
                                 <i class="icon-li fa fa-comments-o text-primary"></i>
                                 <strong class="semibold"><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></strong>
                                 <br>
-                                <p>By <a
-                                        href="/u/{{this.user.username}}">{{{this.user.username}}}</a> {{dateAgo this.created_at}}
+                                <p><a href="/u/{{this.user.username}}"><img src="{{gravatar_url_small this.user.email}}"> {{{this.user.username}}}</a> {{dateAgo this.created_at}}
                                     .<br>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}}
                                     said <strong>no</strong>.</p>
                             </li>

@@ -25,6 +25,7 @@ handlebars.registerHelper(layouts(handlebars));
 handlebars.registerHelper("dateAgo", handlebars_helper.dateAgo);
 handlebars.registerHelper("if_eq", handlebars_helper.if_eq);
 handlebars.registerHelper("if_no_eq", handlebars_helper.if_no_eq);
+handlebars.registerHelper("gravatar_url_small", handlebars_helper.gravatar_url_small);
 
 app.use(bodyParser.json());         // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
