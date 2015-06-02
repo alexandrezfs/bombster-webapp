@@ -59,3 +59,8 @@
     margin-bottom: 20px;
     border-bottom: 1px dotted #CCC;
 }
+
+.trending-item-container {
+    margin-bottom: 20px;
+    border-bottom: 1px dotted #DDD;
+}

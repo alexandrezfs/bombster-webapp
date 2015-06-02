@@ -23,6 +23,7 @@
 
     <!-- Plugin CSS -->
     <link rel="stylesheet" href="/bower_components/magnific-popup/dist/magnific-popup.css">
+    <link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css">
 
     <!-- App CSS -->
     <link rel="stylesheet" href="/css/mvpready-admin.css">
@@ -187,14 +188,14 @@
                     <li>
                         <a href="/dashboard">
                             <i class="fa fa-weixin"></i>
-                            Ask
+                            Ask Question
                         </a>
                     </li>
 
                     <li>
                         <a href="/dashboard/questions">
                             <i class="fa fa-question-circle"></i>
-                            Questions
+                            My Questions
                         </a>
                     </li>
 
@@ -208,6 +209,13 @@
                     </li>
 
                     {{/if}}
+
+                    <li>
+                        <a href="/trending">
+                            <i class="fa fa-bar-chart"></i>
+                            Trending Now
+                        </a>
+                    </li>
 
                 </ul>
 
@@ -241,6 +249,7 @@
 <script src="/bower_components/dropzone/dist/dropzone.js"></script>
 <script src="/bower_components/moment/moment.js"></script>
 <script src="/bower_components/jquery-infinite-scroll/jquery.infinitescroll.min.js"></script>
+<script src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- App JS -->
 <script src="/global/js/mvpready-core.js"></script>

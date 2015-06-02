@@ -831,5 +831,50 @@ module.exports = {
             });
 
         });
+    },
+
+    trending: function (req, res) {
+
+        var username = req.session.username;
+
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+            trending.getPopularTrends(5, function (trending_questions) {
+
+                if (user) {
+
+                    var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                    notifications.getUserNotificationsAndCount(user, function (response) {
+
+                        model.ModelContainer.QuestionModel.count({
+                            user: user._id,
+                            is_deleted: false
+                        })
+                        .exec(function (err, questions_count) {
+                            res.render('trending', {
+                                layout: 'admin',
+                                gravatar_url: gravatar_url,
+                                notifications: response.notifications,
+                                user: user,
+                                trending_questions: trending_questions,
+                                questions_count: questions_count
+                            });
+                        });
+
+                    });
+                }
+                else {
+
+                    res.render('trending', {
+                        layout: 'admin',
+                        trending_questions: trending_questions
+                    });
+
+                }
+
+            });
+
+        });
     }
 };

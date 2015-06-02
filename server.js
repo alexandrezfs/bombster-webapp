@@ -67,6 +67,7 @@ app.post('/password/update', auth.authMiddleware, routes.passwordUpdate);
 app.post('/profile/update', auth.authMiddleware, routes.profileUpdate);
 app.get('/logout', auth.authMiddleware, routes.logout);
 app.get('/search', routes.search);
+app.get('/trending', routes.trending);
 
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);

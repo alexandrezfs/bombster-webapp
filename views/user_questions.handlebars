@@ -81,9 +81,9 @@
                                         <p>{{this.question_title}}</p>
                                     </td>
 
-                                    <td class="valign-middle">{{dateAgo this.created_at}}</td>
+                                    <td class="valign-middle" style="min-width:100px">{{dateAgo this.created_at}}</td>
 
-                                    <td class="file-info valign-middle">
+                                    <td class="file-info valign-middle" style="min-width:100px">
                                         <span><strong class="semibold"><i class="fa fa-eye"></i>
                                         </strong> {{this.views_count}}</span> <span><strong class="semibold"><i
                                             class="fa fa-smile-o"></i> </strong> {{this.vote_yes_count}}</span>
@@ -91,7 +91,7 @@
                                         </strong> {{this.vote_no_count}}</span>
                                     </td>
 
-                                    <td class="text-center valign-middle">
+                                    <td class="text-center valign-middle" style="min-width:100px">
                                         <a href="/q/{{this.question_identifier}}" class="btn btn-xs btn-danger"><i
                                                 class="fa fa-eye"></i></a>
                                         <a class="btn btn-xs btn-secondary" data-toggle="modal" href="#"

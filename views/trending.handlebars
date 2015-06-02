@@ -1,0 +1,106 @@
+<div class="content">
+
+    <div class="container">
+
+        <div class="layout layout-stack-sm layout-main-left">
+
+            <div class="col-sm-7 col-md-9 layout-main">
+
+                <div class="portlet portlet-default">
+
+                    <div class="portlet-header">
+                        <h4 class="portlet-title">
+                            Trending Now
+                        </h4>
+                    </div>
+                    <!-- /.portlet-header -->
+
+                    <div class="portlet-body">
+
+                        {{#if trending_questions}}
+
+                            {{#each trending_questions}}
+
+                                <div class="trending-item-container">
+
+                                    <p><a href="/u/{{this.user.username}}"><img src="{{gravatar_url_small this.user.email}}"> {{{this.user.username}}}</a> {{dateAgo this.created_at}}</p>
+
+                                    <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
+
+                                    <p>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}}
+                                        said <strong>no</strong>.</p>
+
+                                </div>
+                                <!-- /.feed-item -->
+
+                            {{/each}}
+
+                        {{else}}
+
+                            <p>No results found.</p>
+
+                        {{/if}}
+
+                    </div>
+                    <!-- /.portlet-body -->
+
+                </div>
+                <!-- /.portlet -->
+
+            </div>
+            <!-- /.layout-main -->
+
+            <div class="col-sm-5 col-md-3 layout-sidebar">
+
+                <div class="portlet">
+                    {{#if user}}
+
+                        <div class="profile-avatar">
+                            <img src="{{gravatar_url}}" target="_blank" class="profile-avatar-img img-responsive thumbnail" alt="Profile Image">
+                        </div>
+                        <!-- /.profile-avatar -->
+
+                        <div class="list-group">
+
+                            <a href="#" class="list-group-item">
+                                <h3 class="pull-right"><i class="fa fa-question-circle  text-primary"></i></h3>
+                                <h4 class="list-group-item-heading">{{questions_count}}</h4>
+
+                                <p class="list-group-item-text">Questions</p>
+                            </a>
+
+                            <a href="#" class="list-group-item">
+                                <h3 class="pull-right"><i class="fa fa-smile-o  text-primary"></i></h3>
+                                <h4 class="list-group-item-heading">{{user.vote_yes_count}}</h4>
+
+                                <p class="list-group-item-text">Total Yes Votes</p>
+                            </a>
+
+                            <a href="#" class="list-group-item">
+                                <h3 class="pull-right"><i class="fa fa-frown-o  text-primary"></i></h3>
+                                <h4 class="list-group-item-heading">{{user.vote_no_count}}</h4>
+
+                                <p class="list-group-item-text">Total No Votes</p>
+                            </a>
+                        </div>
+                        <!-- /.list-group -->
+
+                    {{else}}
+                        <p>
+                            Start asking on Bombster.io now !
+                        </p>
+                        <a href="/signup" class="btn btn-secondary btn-lg btn-block ">Sign Up</a>
+                    {{/if}}
+                    <br>
+                    <a href="/dashboard" class="btn btn-primary btn-jumbo btn-block ">New Question</a>
+                </div>
+                <!-- /.portlet -->
+
+            </div>
+
+        </div>
+        <!-- /.layout -->
+    </div>
+    <!-- /.container -->
+
+</div> <!-- .content -->

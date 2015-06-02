@@ -25,7 +25,13 @@ $('document').ready(function() {
 
             var question_title = $('#question_title').val();
 
-            if(question_title.length > 0) {
+            if(question_title.length < 20) {
+                sweetAlert("Oops...", "Your question is too short. Please say a little more :)", "error");
+            }
+            else if(question_title.length > 160) {
+                sweetAlert("Oops...", "Your question is too long. Please keep it short !", "error");
+            }
+            else {
 
                 $.post('/question/add', {
                     question_title: question_title,
