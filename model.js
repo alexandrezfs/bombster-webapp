@@ -19,6 +19,7 @@ var UserSchema = new Schema({
     email: String,
     username: String,
     password: String,
+    gravatar_url: String,
     signed_up_with: String,
     signed_up_from: String,
     is_account_activated: Boolean,

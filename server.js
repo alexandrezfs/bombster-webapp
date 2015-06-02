@@ -72,6 +72,7 @@ app.get('/trending', routes.trending);
 app.get('/api/question/:_id', api_routes.getQuestion);
 app.get('/api/timeline/user/:user_id/:page', api_routes.getPaginatedTimeline);
 app.get('/api/questions/user/:user_id/:page', api_routes.getPaginatedQuestions);
+app.get('/api/questions/trending/:page', api_routes.getPaginatedTrendingQuestions);
 app.get('/api/notifications/user/:user_id/:page', api_routes.getPaginatedNotifications);
 app.get('/api/question/delete/:question_id', api_routes.deleteQuestion);
 app.post('/api/notifications/markasread', api_routes.markAsReadNotifications);

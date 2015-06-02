@@ -52,6 +52,7 @@ module.exports = {
                         password: hash,
                         username: formValues.username,
                         email: formValues.email,
+                        gravatar_url: gravatar.url(formValues.email, {s: '25'}),
                         is_account_activated: false,
                         token: uuid.v4()
                     };
@@ -110,6 +111,7 @@ module.exports = {
 
                     //Update login date
                     user.last_login = new Date();
+                    user.gravatar_url = gravatar.url(user.email, {s: '25'});
                     user.save();
 
                     req.session.username = user.username;
@@ -320,7 +322,7 @@ module.exports = {
 
                                     var gravatar_url = gravatar.url(user.email, {s: '400'});
 
-                                    trending.getPopularTrends(5, function (trending_questions) {
+                                    trending.getPopularTrends(5, 1, function (trending_questions) {
 
                                         model.ModelContainer.QuestionModel.count({
                                             user: user._id,
@@ -372,7 +374,7 @@ module.exports = {
                     .populate('question')
                     .exec(function (err, timelineItems) {
 
-                        trending.getPopularTrends(5, function (trending_questions) {
+                        trending.getPopularTrends(5, 1, function (trending_questions) {
 
                             if (user) {
 
@@ -797,7 +799,7 @@ module.exports = {
 
             search.searchForQuestion(keyword, function (questions) {
 
-                trending.getPopularTrends(5, function (trending_questions) {
+                trending.getPopularTrends(5, 1, function (trending_questions) {
 
                     if (user) {
 
@@ -839,7 +841,7 @@ module.exports = {
 
         model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            trending.getPopularTrends(5, function (trending_questions) {
+            trending.getPopularTrends(5, 1, function (trending_questions) {
 
                 if (user) {
 
@@ -851,16 +853,16 @@ module.exports = {
                             user: user._id,
                             is_deleted: false
                         })
-                        .exec(function (err, questions_count) {
-                            res.render('trending', {
-                                layout: 'admin',
-                                gravatar_url: gravatar_url,
-                                notifications: response.notifications,
-                                user: user,
-                                trending_questions: trending_questions,
-                                questions_count: questions_count
+                            .exec(function (err, questions_count) {
+                                res.render('trending', {
+                                    layout: 'admin',
+                                    gravatar_url: gravatar_url,
+                                    notifications: response.notifications,
+                                    user: user,
+                                    trending_questions: trending_questions,
+                                    questions_count: questions_count
+                                });
                             });
-                        });
 
                     });
                 }

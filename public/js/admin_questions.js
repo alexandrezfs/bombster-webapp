@@ -75,7 +75,7 @@ function questionItemToHtml(qItem) {
     var col4Content = '<span><strong class="semibold"><i class="fa fa-eye"></i> </strong> ' + qItem.views_count + '</span> <span><strong class="semibold"><i class="fa fa-smile-o"></i> </strong> ' + qItem.vote_yes_count + '</span> <span><strong class="semibold"><i class="fa fa-frown-o"></i> </strong> ' + qItem.vote_no_count + '</span>';
     var col5Content = '<a href="/q/' + qItem.question_identifier + '" class="btn btn-xs btn-danger"><i class="fa fa-eye"></i></a> <a class="btn btn-xs btn-secondary"><i class="fa fa-times"></i></a>';
 
-    var html = '<tr><td class="valign-middle">' + col1Content + '</td><td class="valign-middle">' + col2Content + '</td><td class="valign-middle">' + col3Content + '</td><td class="file-info valign-middle">' + col4Content + '</td><td class="text-center valign-middle">' + col5Content + '</td></tr>';
+    var html = '<tr><td class="valign-middle">' + col1Content + '</td><td class="valign-middle">' + col2Content + '</td><td style="min-width:100px" class="valign-middle">' + col3Content + '</td><td style="min-width:100px" class="file-info valign-middle">' + col4Content + '</td><td style="min-width:100px" class="text-center valign-middle">' + col5Content + '</td></tr>';
 
     return html;
 }

@@ -12,6 +12,7 @@ var vote_utils = require('./vote');
 var url = require('./url');
 var mongoosePaginate = require('mongoose-paginate');
 var notifications = require('./notifications');
+var trending = require('./trending');
 
 module.exports = {
 
@@ -61,6 +62,16 @@ module.exports = {
                 res.json(paginatedResults);
             }
         }, {populate: ['user'], sortBy: {created_at: -1}});
+
+    },
+
+    getPaginatedTrendingQuestions: function(req, res) {
+
+        var page = req.params.page;
+
+        trending.getPopularTrends(10, page, function(questions) {
+            res.json(questions);
+        });
 
     },
 

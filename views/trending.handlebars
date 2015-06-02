@@ -15,7 +15,7 @@
                     </div>
                     <!-- /.portlet-header -->
 
-                    <div class="portlet-body">
+                    <div id="questions-trending-container" class="portlet-body">
 
                         {{#if trending_questions}}
 
@@ -23,7 +23,7 @@
 
                                 <div class="trending-item-container">
 
-                                    <p><a href="/u/{{this.user.username}}"><img src="{{gravatar_url_small this.user.email}}"> {{{this.user.username}}}</a> {{dateAgo this.created_at}}</p>
+                                    <p><a href="/u/{{this.user.username}}"><img src="{{this.user.gravatar_url}}"> {{{this.user.username}}}</a> {{dateAgo this.created_at}}</p>
 
                                     <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
 
@@ -43,6 +43,10 @@
 
                     </div>
                     <!-- /.portlet-body -->
+
+                    <div id="questions-trending-loader-container">
+                        <img src="/img/loader.gif" class="loader" id="questions-trending-loader">
+                    </div>
 
                 </div>
                 <!-- /.portlet -->
