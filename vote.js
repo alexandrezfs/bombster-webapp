@@ -10,7 +10,7 @@ exports.vote = function (vote, userVote, callback) {
         findOneQuery.$or = [{user: userVote._id}, {fingerprints: vote.fingerprints}];
     }
     else {
-        findOneQuery.fingerprints = vote.fingerprints
+        findOneQuery.fingerprints = vote.fingerprints;
     }
 
     model.ModelContainer.VoteModel.findOne(findOneQuery, function (err, voteVerif) {
