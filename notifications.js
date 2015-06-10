@@ -2,6 +2,7 @@ var model = require('./model');
 var config = require('./config');
 var slug = require('slug');
 var url = require('./url');
+var email_interface = require('./email_interface');
 
 exports.getUserNotificationsAndCount = function(user, callback) {
 
@@ -45,4 +46,25 @@ exports.getNotificationsByPageAndUser = function(user_id, page, callback) {
         }
     }, {populate: ['user'], sortBy: {created_at: -1}});
 
+};
+
+exports.sendNotificationByEmail = function(user, notification, callback) {
+
+    if(user.send_system_notifications) {
+
+        email_interface.sendMailWithTemplate(
+            "",
+            "",
+            notification.title,
+            config.values.email_system_address,
+            "Bombster.io",
+            user.email,
+            config.values.mandrill_templates['bombster-notification'].slug,
+            [{name: "USERNAME", content: user.username}, {name: "MESSAGE", content: notification.content}],
+            function (response) {
+                callback(response);
+            });
+
+    }
+    
 };

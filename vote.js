@@ -1,6 +1,7 @@
 var model = require('./model');
 var email_interface = require('./email_interface');
 var config = require('./config');
+var notifications = require('./notifications');
 
 exports.vote = function (vote, userVote, callback) {
 
@@ -53,18 +54,9 @@ exports.vote = function (vote, userVote, callback) {
                                     model.ModelContainer.NotificationModel(notification).save();
 
                                     //send a mail
-                                    email_interface.sendMailWithTemplate(
-                                        "",
-                                        "",
-                                        notification.title,
-                                        config.values.email_system_address,
-                                        "Bombster.io",
-                                        uQuestion.email,
-                                        config.values.mandrill_templates['bombster-notification'].slug,
-                                        [{name: "USERNAME", content: uQuestion.username}, {name: "MESSAGE", content: notification.content}],
-                                        function (response) {
-                                            console.log(response);
-                                        });
+                                    notifications.sendNotificationByEmail(uQuestion, notification, function(response) {
+                                        console.log(response);
+                                    });
                                 }
 
                                 //Notify if it's 1k vote
@@ -84,18 +76,9 @@ exports.vote = function (vote, userVote, callback) {
                                     model.ModelContainer.NotificationModel(notification).save();
 
                                     //send a mail
-                                    email_interface.sendMailWithTemplate(
-                                        "",
-                                        "",
-                                        notification.title,
-                                        config.values.email_system_address,
-                                        "Bombster.io",
-                                        uQuestion.email,
-                                        config.values.mandrill_templates['bombster-notification'].slug,
-                                        [{name: "USERNAME", content: uQuestion.username}, {name: "MESSAGE", content: notification.content}],
-                                        function (response) {
-                                            console.log(response);
-                                        });
+                                    notifications.sendNotificationByEmail(uQuestion, notification, function(response) {
+                                        console.log(response);
+                                    });
                                 }
 
                                 if(userVote && userVote !== null) {
