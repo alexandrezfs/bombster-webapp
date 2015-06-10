@@ -6,4 +6,5 @@ exports.authMiddleware = function(req, res, next) {
     else {
         res.redirect('/login');
     }
+
 };

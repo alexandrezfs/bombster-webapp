@@ -1,4 +1,6 @@
 var model = require('./model');
+var email_interface = require('./email_interface');
+var config = require('./config');
 
 exports.vote = function (vote, userVote, callback) {
 
@@ -47,6 +49,51 @@ exports.vote = function (vote, userVote, callback) {
                                     };
 
                                     model.ModelContainer.NotificationModel(notification).save();
+
+                                    //send a mail
+                                    email_interface.sendMailWithTemplate(
+                                        "",
+                                        "",
+                                        notification.title,
+                                        config.values.email_system_address,
+                                        "Bombster.io",
+                                        uQuestion.email,
+                                        config.values.mandrill_templates['bombster-notification'].slug,
+                                        [{name: "USERNAME", content: uQuestion.username}, {name: "MESSAGE", content: notification.content}],
+                                        function (response) {
+                                            console.log(response);
+                                        });
+                                }
+
+                                //Notify if it's 1k vote
+
+                                var totalVotes = q.vote_yes_count + q.vote_no_count;
+
+                                if (totalVotes === 1000) {
+
+                                    var notification = {
+                                        user: uQuestion._id,
+                                        type: "question-first-vote",
+                                        title: "Your question got 1000 votes !",
+                                        content: "Congrats ! Your question \"" + q.question_title + "\" got 1000 votes. Share it to your friends and get more votes !",
+                                        url: "/q/" + q.question_identifier
+                                    };
+
+                                    model.ModelContainer.NotificationModel(notification).save();
+
+                                    //send a mail
+                                    email_interface.sendMailWithTemplate(
+                                        "",
+                                        "",
+                                        notification.title,
+                                        config.values.email_system_address,
+                                        "Bombster.io",
+                                        uQuestion.email,
+                                        config.values.mandrill_templates['bombster-notification'].slug,
+                                        [{name: "USERNAME", content: uQuestion.username}, {name: "MESSAGE", content: notification.content}],
+                                        function (response) {
+                                            console.log(response);
+                                        });
                                 }
 
                                 if(userVote && userVote !== null) {

@@ -8,7 +8,6 @@ var slug = require('slug');
 var shortid = require('shortid');
 var gravatar = require('gravatar');
 var uploader = require('./upload');
-var vote_utils = require('./vote');
 var urlTools = require('./url');
 var notifications = require('./notifications');
 var search = require('./search');
@@ -204,11 +203,11 @@ module.exports = {
                 email_interface.sendMailWithTemplate(
                     "",
                     "",
-                    config.values.mandrill_templates['password-reset-link'].name,
+                    config.values.mandrill_templates['bombster-reset-password'].name,
                     config.values.email_system_address,
                     "Bombster.io",
                     user.email,
-                    config.values.mandrill_templates['password-reset-link'].slug,
+                    config.values.mandrill_templates['bombster-reset-password'].slug,
                     [{name: "USERNAME", content: user.username}, {name: "LINK", content: link}],
                     function (response) {
                         console.log(response);
@@ -269,11 +268,11 @@ module.exports = {
                         email_interface.sendMailWithTemplate(
                             "",
                             "",
-                            config.values.mandrill_templates['password-reset-success'].name,
+                            config.values.mandrill_templates['bombster-reset-password-success'].name,
                             config.values.email_system_address,
                             "Bombster.io",
                             user.email,
-                            config.values.mandrill_templates['password-reset-success'].slug,
+                            config.values.mandrill_templates['bombster-reset-password-success'].slug,
                             [{name: "USERNAME", content: user.username}],
                             function (response) {
                                 console.log(response);

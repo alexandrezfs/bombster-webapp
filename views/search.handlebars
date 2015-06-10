@@ -36,7 +36,22 @@
 
                         {{else}}
 
-                            <p>No results found.</p>
+                            <h3>No results found. Theses other questions might interest you.</h3>
+
+                            {{#each trending_questions}}
+
+                                <div class="search-item-container">
+
+                                    <h2><a href="/q/{{this.question_identifier}}">{{{this.question_title}}}</a></h2>
+
+                                    <p><a href="/u/{{this.user.username}}"><img src="{{gravatar_url_small this.user.email}}"> {{{this.user.username}}}</a> {{dateAgo this.created_at}}
+                                        .<br>{{this.vote_yes_count}} said <strong>yes</strong>, {{this.vote_no_count}}
+                                        said <strong>no</strong>.</p>
+
+                                </div>
+                                <!-- /.feed-item -->
+
+                            {{/each}}
 
                         {{/if}}
 
