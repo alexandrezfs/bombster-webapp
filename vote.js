@@ -1,67 +1,78 @@
 var model = require('./model');
 
-exports.vote = function(vote, callback) {
+exports.vote = function (vote, userVote, callback) {
 
-    model.ModelContainer.VoteModel.findOne({
-        fingerprints: vote.fingerprints,
-        question: vote.question
-    }, function (err, voteVerif) {
+    var findOneQuery = {question: vote.question};
 
-        if (voteVerif) {
-            callback({message: 'already voted'});
-        }
-        else {
+    console.log(userVote);
 
-            model.ModelContainer.QuestionModel.findOne({_id: vote.question}, function (err, q) {
-                model.ModelContainer.VoteModel(vote).save(function (err, v) {
+    if(userVote && userVote !== null) {
+        findOneQuery.$or = [{user: userVote._id}, {fingerprints: vote.fingerprints}];
+    }
+    else {
+        findOneQuery.fingerprints = vote.fingerprints
+    }
 
+    model.ModelContainer.VoteModel.findOne(findOneQuery, function (err, voteVerif) {
 
-                    if (vote.vote_value == 'yes') {
-                        q.vote_yes_count++;
-                    }
-                    else if (vote.vote_value == 'no') {
-                        q.vote_no_count++;
-                    }
+            if (voteVerif) {
+                callback({message: 'already voted'});
+            }
+            else {
 
-                    q.save(function (err, qSaved) {
+                model.ModelContainer.QuestionModel.findOne({_id: vote.question}, function (err, q) {
+                    model.ModelContainer.VoteModel(vote).save(function (err, v) {
 
-                        //find user and increment vote counts
-                        model.ModelContainer.UserModel.findOne({_id: vote.user}, function(err, u) {
+                        if (vote.vote_value == 'yes') {
+                            q.vote_yes_count++;
+                        }
+                        else if (vote.vote_value == 'no') {
+                            q.vote_no_count++;
+                        }
 
-                            //Notify if it's the first vote.
-                            if(q.vote_yes_count === 1 || q.vote_no_count === 1) {
+                        q.save(function (err, qSaved) {
 
-                                var notification = {
-                                    user: u._id,
-                                    type: "question-first-vote",
-                                    title: "Your question got a first vote !",
-                                    content: "Congrats ! Your question \"" + q.question_title + "\" got a first vote. Share it to your friends and get more votes !",
-                                    url: "/q/" + q.question_identifier
-                                };
+                            //find user of this question and increment vote counts
+                            model.ModelContainer.UserModel.findOne({_id: q.user}, function (err, uQuestion) {
 
-                                model.ModelContainer.NotificationModel(notification).save();
-                            }
+                                //Notify if it's the first vote.
+                                if (q.vote_yes_count === 1 || q.vote_no_count === 1) {
 
-                            if (vote.vote_value == 'yes') {
-                                u.vote_yes_count++;
-                            }
-                            else if (vote.vote_value == 'no') {
-                                u.vote_no_count++;
-                            }
+                                    var notification = {
+                                        user: uQuestion._id,
+                                        type: "question-first-vote",
+                                        title: "Your question got a first vote !",
+                                        content: "Congrats ! Your question \"" + q.question_title + "\" got a first vote. Share it to your friends and get more votes !",
+                                        url: "/q/" + q.question_identifier
+                                    };
 
-                            u.save();
+                                    model.ModelContainer.NotificationModel(notification).save();
+                                }
 
-                            callback(qSaved);
+                                if(userVote && userVote !== null) {
+
+                                    if (vote.vote_value == 'yes') {
+                                        userVote.vote_yes_count++;
+                                    }
+                                    else if (vote.vote_value == 'no') {
+                                        userVote.vote_no_count++;
+                                    }
+
+                                    userVote.save();
+                                }
+
+                                callback(qSaved);
+
+                            });
 
                         });
 
                     });
-
                 });
-            });
+
+            }
 
         }
-
-    });
+    );
 
 };

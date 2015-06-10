@@ -57,7 +57,6 @@ app.get('/dashboard', auth.authMiddleware, routes.dashboard);
 app.post('/question/add', routes.addQuestion);
 app.get('/q/:question_identifier', routes.question);
 app.get('/u/:username', routes.user);
-app.post('/vote', routes.addVote);
 app.post('/upload', routes.upload);
 app.get('/dashboard/questions', auth.authMiddleware, routes.userQuestions);
 app.get('/dashboard/notifications', auth.authMiddleware, routes.notifications);
@@ -76,7 +75,7 @@ app.get('/api/questions/trending/:page', api_routes.getPaginatedTrendingQuestion
 app.get('/api/notifications/user/:user_id/:page', api_routes.getPaginatedNotifications);
 app.get('/api/question/delete/:question_id', api_routes.deleteQuestion);
 app.post('/api/notifications/markasread', api_routes.markAsReadNotifications);
-
+app.post('/api/vote', api_routes.addVote);
 
 //Redirect no 200 status to /
 app.use(fail.routeFailed);

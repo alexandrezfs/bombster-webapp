@@ -17,7 +17,7 @@ $(document).ready(function () {
                 vote_value: 'yes'
             });
 
-            $.post('/vote', {
+            $.post('/api/vote', {
                 fingerprints: fingerprints,
                 question_id: question_id,
                 vote_value: 'yes'
@@ -31,7 +31,7 @@ $(document).ready(function () {
 
         $("#no").click(function () {
 
-            $.post('/vote', {
+            $.post('/api/vote', {
                 fingerprints: fingerprints,
                 question_id: question_id,
                 vote_value: 'no'

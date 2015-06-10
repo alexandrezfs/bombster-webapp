@@ -536,44 +536,6 @@ module.exports = {
 
     },
 
-    addVote: function (req, res) {
-
-        var question_id = req.body.question_id;
-        var vote_value = req.body.vote_value;
-        var fingerprints = req.body.fingerprints;
-
-        var username = req.session.username;
-
-        var vote = {
-            vote_value: vote_value,
-            fingerprints: fingerprints,
-            question: question_id
-        };
-
-        if (username) {
-
-            model.ModelContainer.UserModel.findOne({username: username}, function (err, user) {
-
-                vote.user = user._id;
-
-                vote_utils.vote(vote, function (response) {
-
-                    res.json(response);
-
-                });
-            });
-        }
-        else {
-
-            vote_utils.vote(vote, function (response) {
-
-                res.json(response);
-
-            });
-
-        }
-    },
-
     userQuestions: function (req, res) {
 
         var username = req.session.username;
