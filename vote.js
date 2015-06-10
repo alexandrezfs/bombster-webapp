@@ -37,10 +37,12 @@ exports.vote = function (vote, userVote, callback) {
                             //find user of this question and increment vote counts
                             model.ModelContainer.UserModel.findOne({_id: q.user}, function (err, uQuestion) {
 
+                                var notification;
+
                                 //Notify if it's the first vote.
                                 if (q.vote_yes_count === 1 || q.vote_no_count === 1) {
 
-                                    var notification = {
+                                    notification = {
                                         user: uQuestion._id,
                                         type: "question-first-vote",
                                         title: "Your question got a first vote !",
@@ -71,7 +73,7 @@ exports.vote = function (vote, userVote, callback) {
 
                                 if (totalVotes === 1000) {
 
-                                    var notification = {
+                                    notification = {
                                         user: uQuestion._id,
                                         type: "question-first-vote",
                                         title: "Your question got 1000 votes !",
