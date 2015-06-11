@@ -40,8 +40,10 @@ exports.vote = function (vote, userVote, callback) {
 
                                 var notification;
 
+                                var totalVotes = q.vote_yes_count + q.vote_no_count;
+
                                 //Notify if it's the first vote.
-                                if (q.vote_yes_count === 1 || q.vote_no_count === 1) {
+                                if (totalVotes === 1) {
 
                                     notification = {
                                         user: uQuestion._id,
@@ -60,8 +62,6 @@ exports.vote = function (vote, userVote, callback) {
                                 }
 
                                 //Notify if it's 1k vote
-
-                                var totalVotes = q.vote_yes_count + q.vote_no_count;
 
                                 if (totalVotes === 1000) {
 
