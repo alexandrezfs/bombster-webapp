@@ -81,16 +81,16 @@ exports.vote = function (vote, userVote, callback) {
                                     });
                                 }
 
-                                if(userVote && userVote !== null) {
+                                if(uQuestion && uQuestion !== null) {
 
                                     if (vote.vote_value == 'yes') {
-                                        userVote.vote_yes_count++;
+                                        uQuestion.vote_yes_count++;
                                     }
                                     else if (vote.vote_value == 'no') {
-                                        userVote.vote_no_count++;
+                                        uQuestion.vote_no_count++;
                                     }
 
-                                    userVote.save();
+                                    uQuestion.save();
                                 }
 
                                 callback(qSaved);
