@@ -9,8 +9,6 @@ $('document').ready(function() {
         $(window).scroll(function(){
             if  ($(window).scrollTop() == $(document).height() - $(window).height()){
 
-                console.log('Scrolled to waypoint!');
-
                 if(!stop_load_timeline) {
                     loadNextTimelinePage(loadPage);
                 }
@@ -53,15 +51,11 @@ $('document').ready(function() {
 
 function loadNextTimelinePage(page) {
 
-    console.log(page);
-
     var user_id = $('#user_id').val();
 
     $('#timeline-loader').show();
 
     $.get('/api/timeline/user/' + user_id + '/' + page, function(data) {
-
-        console.log(data);
 
         if(data.length === 0) {
             $('#timeline-loader').hide();
@@ -120,8 +114,6 @@ function initDropzone() {
         $('#img-upload-container').html('<a href="#" class="fa fa-trash-o ui-tooltip" title="Remove image" onclick="deleteImage(); return false;"><i></i></a><img src="' + response.Location + '" class="img-thumbnail">');
 
         imgForUpload = response.Location;
-
-        console.log(response);
 
     });
 }

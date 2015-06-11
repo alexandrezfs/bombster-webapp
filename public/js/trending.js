@@ -8,8 +8,6 @@ $('document').ready(function() {
         $(window).scroll(function(){
             if  ($(window).scrollTop() == $(document).height() - $(window).height()){
 
-                console.log('Scrolled to waypoint!');
-
                 if(!stop_load_questions_trending) {
                     loadNextQuestionsTrendingPage(loadPage);
                 }
@@ -21,19 +19,15 @@ $('document').ready(function() {
 
 function loadNextQuestionsTrendingPage(page) {
 
-    console.log(page);
-
     var user_id = $('#user_id').val();
 
     $('#questions-trending-loader').show();
 
     $.get('/api/questions/trending/' + page, function(data) {
 
-        console.log(data);
-
         if(data.length === 0) {
             $('#questions-trending-loader').hide();
-            stop_load_questions = true;
+            stop_load_questions_trending = true;
         }
         else {
 

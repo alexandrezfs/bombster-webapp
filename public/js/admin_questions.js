@@ -9,8 +9,6 @@ $('document').ready(function() {
         $(window).scroll(function(){
             if  ($(window).scrollTop() == $(document).height() - $(window).height()){
 
-                console.log('Scrolled to waypoint!');
-
                 if(!stop_load_questions) {
                     loadNextQuestionsPage(loadPage);
                 }
@@ -22,15 +20,11 @@ $('document').ready(function() {
 
 function loadNextQuestionsPage(page) {
 
-    console.log(page);
-
     var user_id = $('#user_id').val();
 
     $('#questions-loader').show();
 
     $.get('/api/questions/user/' + user_id + '/' + page, function(data) {
-
-        console.log(data);
 
         if(data.length === 0) {
             $('#questions-loader').hide();
@@ -90,8 +84,6 @@ function openModalDeleteQuestion(question_id) {
 function deleteQuestion() {
 
     $.get('/api/question/delete/' + question_to_delete_id, function(data) {
-
-        console.log(data);
 
         document.location.href = "";
     });

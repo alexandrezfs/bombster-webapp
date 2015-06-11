@@ -3,14 +3,10 @@ var stop_load_notification = false;
 
 $('document').ready(function() {
 
-    console.log('test');
-
     if($('#notifications-container').length > 0) {
 
         $(window).scroll(function(){
             if  ($(window).scrollTop() == $(document).height() - $(window).height()){
-
-                console.log('Scrolled to waypoint!');
 
                 if(!stop_load_notification) {
                     loadNextNotificationsPage(loadPage);
@@ -23,15 +19,11 @@ $('document').ready(function() {
 
 function loadNextNotificationsPage(page) {
 
-    console.log(page);
-
     var user_id = $('#user_id').val();
 
     $('#notifications-loader').show();
 
     $.get('/api/notifications/user/' + user_id + '/' + page, function(data) {
-
-        console.log(data);
 
         if(data.length === 0) {
             $('#notifications-loader').hide();

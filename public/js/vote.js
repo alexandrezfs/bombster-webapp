@@ -11,19 +11,11 @@ $(document).ready(function () {
 
         $("#yes").click(function () {
 
-            console.log({
-                fingerprints: fingerprints,
-                question_id: question_id,
-                vote_value: 'yes'
-            });
-
             $.post('/api/vote', {
                 fingerprints: fingerprints,
                 question_id: question_id,
                 vote_value: 'yes'
             }, function (response) {
-
-                console.log(response);
                 displayResult(response);
             });
 
@@ -36,8 +28,6 @@ $(document).ready(function () {
                 question_id: question_id,
                 vote_value: 'no'
             }, function (response) {
-
-                console.log(response);
                 displayResult(response);
             });
 
@@ -75,9 +65,6 @@ function reloadVoteData() {
     var question_id = $('#question_id').val();
 
     $.get('/api/question/' + question_id, function(response) {
-
-        console.log(response);
-
         assignVoteCounts(response);
     });
 }
