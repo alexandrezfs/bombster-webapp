@@ -66,5 +66,5 @@ exports.sendNotificationByEmail = function(user, notification, callback) {
             });
 
     }
-    
+
 };
