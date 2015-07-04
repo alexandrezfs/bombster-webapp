@@ -2,12 +2,18 @@
 
     <div class="content">
 
-        <div class="intro">
-            <h2>
-                {{question.question_title}}
-            </h2>
+        <div class="intro question-style">
+            {{{question_title_linkified}}}
         </div>
 
+        {{#if question.image}}
+            <div class="row">
+                <div class="col-lg-12 question-img">
+                    <img src="{{question.image}}">
+                </div>
+            </div>
+        {{/if}}
+        
         <div class="counter">
 
             <div class="row">
@@ -16,14 +22,6 @@
                 <div class="col-lg-6"><h2><i
                         class="fa fa-frown-o"></i> <span id="no-count">{{question.vote_no_count}}</span></h2></div>
             </div>
-
-            {{#if question.image}}
-                <div class="row">
-                    <div class="col-lg-12 question-img">
-                        <img src="{{question.image}}">
-                    </div>
-                </div>
-            {{/if}}
 
         </div>
 

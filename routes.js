@@ -12,6 +12,7 @@ var urlTools = require('./url');
 var notifications = require('./notifications');
 var search = require('./search');
 var trending = require('./trending');
+var linkManip = require('./linkManip');
 
 module.exports = {
 
@@ -524,8 +525,11 @@ module.exports = {
                 q.views_count++;
                 q.save();
 
+                var question_title_linkified = linkManip.linkifyText(q.question_title);
+
                 res.render('question', {
                     question: q,
+                    question_title_linkified : question_title_linkified,
                     layout: 'release',
                     url: fullUrl
                 });

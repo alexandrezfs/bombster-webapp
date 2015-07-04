@@ -68,3 +68,7 @@
     margin-bottom: 20px;
     border-bottom: 1px dotted #DDD;
 }
+
+.question-style {
+    font-size: 1.3em;
+}
