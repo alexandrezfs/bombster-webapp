@@ -105,7 +105,7 @@ module.exports = {
         }
         else if (req.cookies._id) {
 
-            model.ModelContainer.UserModel.findOne({_id: req.cookies._id}, function (err, user) {
+            model.ModelContainer.UserModel.findOne({_id: req.cookies._id, is_deleted: false}, function (err, user) {
 
                 if (user) {
 
@@ -143,7 +143,7 @@ module.exports = {
 
         var errors = [];
 
-        model.ModelContainer.UserModel.findOne({$or: [{username: login}, {email: login}]}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({$or: [{username: login}, {email: login}], is_deleted: false}, function (err, user) {
 
             if (!user) {
                 errors.push('Your login / password are not recognized.');
@@ -189,7 +189,7 @@ module.exports = {
         var email = req.body.email;
         var errors = [];
 
-        model.ModelContainer.UserModel.findOne({email: email}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({email: email, is_deleted: false}, function (err, user) {
 
             if (!user) {
                 errors.push('This email does not match with any account.');
@@ -230,7 +230,7 @@ module.exports = {
 
         var token = req.params.token;
 
-        model.ModelContainer.UserModel.findOne({token: token}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({token: token, is_deleted: false}, function (err, user) {
 
             if (user) {
                 res.render('password_reset', {user: user, token: token, layout: 'landing'});
