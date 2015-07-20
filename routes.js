@@ -843,5 +843,47 @@ module.exports = {
             });
 
         });
+    },
+
+    deleteAccount: function(req, res) {
+
+        var username = req.session.username;
+        var password1 = req.body.password1;
+        var password2 = req.body.password2;
+
+        var errors = [];
+
+        if(password1 == password2) {
+
+            model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+
+                if (user) {
+
+                    bcrypt.compare(password1, user.password, function (err, result) {
+
+                        if (result === true) {
+
+                            user.is_deleted = true;
+                            user.save();
+                            req.session.destroy();
+                            res.redirect('/');
+                        }
+                        else {
+                            errors.push('Your password is not correct.');
+                            res.redirect('/dashboard/settings', {errors: errors});
+                        }
+
+                    });
+                }
+
+            });
+
+        }
+        else {
+            errors.push('Passwords are not the same.');
+            res.redirect('/dashboard/settings', {errors: errors});
+        }
+
     }
+
 };
