@@ -1,3 +1,31 @@
+<div class="modal fade" id="deleteAccountModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">You will miss us :(</h4>
+            </div>
+            <form action="/account/delete" method="POST">
+                <div class="modal-body">
+                    <p>Please confirm your password.</p>
+                    <div class="form-group">
+                        <label for="login-password1" class="placeholder-hidden">Password</label>
+                        <input type="password" class="form-control" id="login-password1" name="password1" placeholder="Password">
+                    </div> <!-- /.form-group -->
+                    <div class="form-group">
+                        <label for="login-password2" class="placeholder-hidden">Password (confirmation)</label>
+                        <input type="password" class="form-control" id="login-password2" name="password2" placeholder="Password (confirmation)">
+                    </div> <!-- /.form-group -->
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Yes, delete my account.">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="content">
 
     <div class="container">
@@ -130,12 +158,13 @@
                             <div class="form-group">
                                 <div class="col-md-7 col-md-push-3">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#deleteAccountModal">
+                                        Delete my account
+                                    </button>
                                 </div>
                                 <!-- /.col -->
                             </div>
                             <!-- /.form-group -->
-
-                            <p><span><a href="/">Delete my account</a></span></p>
 
                         </form>
 
