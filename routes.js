@@ -143,7 +143,10 @@ module.exports = {
 
         var errors = [];
 
-        model.ModelContainer.UserModel.findOne({$or: [{username: login}, {email: login}], is_deleted: false}, function (err, user) {
+        model.ModelContainer.UserModel.findOne({
+            $or: [{username: login}, {email: login}],
+            is_deleted: false
+        }, function (err, user) {
 
             if (!user) {
                 errors.push('Your login / password are not recognized.');
@@ -529,7 +532,7 @@ module.exports = {
 
                 res.render('question', {
                     question: q,
-                    question_title_linkified : question_title_linkified,
+                    question_title_linkified: question_title_linkified,
                     layout: 'release',
                     url: fullUrl
                 });
@@ -845,7 +848,7 @@ module.exports = {
         });
     },
 
-    deleteAccount: function(req, res) {
+    deleteAccount: function (req, res) {
 
         var username = req.session.username;
         var password1 = req.body.password1;
@@ -853,9 +856,9 @@ module.exports = {
 
         var errors = [];
 
-        if(password1 == password2) {
+        model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
 
-            model.ModelContainer.UserModel.findOne({username: username, is_deleted: false}, function (err, user) {
+            if (password1 == password2) {
 
                 if (user) {
 
@@ -869,20 +872,48 @@ module.exports = {
                             res.redirect('/');
                         }
                         else {
-                            errors.push('Your password is not correct.');
-                            res.redirect('/dashboard/settings', {errors: errors});
+                            var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                            notifications.getUserNotificationsAndCount(user, function (response) {
+
+                                errors.push('Your password is not correct.');
+
+                                res.render('settings', {
+                                    user: user,
+                                    layout: 'admin',
+                                    gravatar_url: gravatar_url,
+                                    notifications: response.notifications,
+                                    noread_notifications_count: response.noread_notifications_count,
+                                    errors: errors
+                                });
+
+                            });
                         }
 
                     });
                 }
+            }
+            else {
 
-            });
+                errors.push('Passwords are not the same.');
 
-        }
-        else {
-            errors.push('Passwords are not the same.');
-            res.redirect('/dashboard/settings', {errors: errors});
-        }
+                var gravatar_url = gravatar.url(user.email, {s: '400'});
+
+                notifications.getUserNotificationsAndCount(user, function (response) {
+
+                    res.render('settings', {
+                        user: user,
+                        layout: 'admin',
+                        gravatar_url: gravatar_url,
+                        notifications: response.notifications,
+                        noread_notifications_count: response.noread_notifications_count,
+                        errors: errors
+                    });
+
+                });
+            }
+
+        });
 
     }
 
